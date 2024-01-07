@@ -192,23 +192,18 @@ Poisson3D::assemble()
               // If current face lies on the boundary, and its boundary ID (or
               // tag) is that of one of the Neumann boundaries, we assemble the
               // boundary integral.
-              if (cell->face(face_number)->at_boundary() &&
-                  (cell->face(face_number)->boundary_id() == 2 ||
-                   cell->face(face_number)->boundary_id() == 3))
-                {
-                  fe_values_boundary.reinit(cell, face_number);
-
-                  for (unsigned int q = 0; q < quadrature_boundary->size(); ++q)
-                    for (unsigned int i = 0; i < dofs_per_cell; ++i)
-                      cell_rhs(i) +=
-                        function_h.value(
-                          fe_values_boundary.quadrature_point(q)) * // h(xq)
-                        fe_values_boundary.shape_value(i, q) *      // v(xq)
-                        fe_values_boundary.JxW(q);                  // Jq wq
+              if (cell->face(face_number)->at_boundary()) {
+                  const unsigned int boundary_id = cell->face(face_number)->boundary_id();
+                  if (boundary_id >= 0 && boundary_id <= 5) {
+                      fe_values_boundary.reinit(cell, face_number);
+                      for (unsigned int q = 0; q < quadrature_boundary->size(); ++q)
+                        for (unsigned int i = 0; i < dofs_per_cell; ++i)
+                          cell_rhs(i) += 0;
+                            
+                  }
                 }
             }
         }
-
 
       // At this point the local matrix and vector are constructed: we
       // need to sum them into the global matrix and vector. To this end,
@@ -255,16 +250,36 @@ Poisson3D::solve()
 
   // Here we specify the maximum number of iterations of the iterative solver,
   // and its tolerance.
-  SolverControl solver_control(1000, 1e-6 * system_rhs.l2_norm());
+  SolverControl solver_control(10000, 1e-6 * system_rhs.l2_norm());
 
   // Since the system matrix is symmetric and positive definite, we solve the
   // system using the conjugate gradient method.
-  SolverCG<Vector<double>> solver(solver_control);
+  SolverGMRES<Vector<double>> solver(solver_control);
+  
+  PreconditionIdentity preconditioner;
 
+  //PreconditionJacobi preconditioner;
+  //preconditioner.initialize(system_matrix);
+
+  //PreconditionSOR preconditioner;
+  //preconditioner.initialize(
+  //  system_matrix, PreconditionSOR<SparseMatrix<double>>::AdditionalData(1.0));
+
+  //PreconditionSSOR preconditioner;
+  //preconditioner.initialize(
+  //  system_matrix,
+  //  PreconditionSSOR<SparseMatrix<double>>::AdditionalData(1.0));
+
+  if (isMatrixSingular(system_matrix)) {
+        std::cout << "The matrix is singular." << std::endl;
+    } else {
+        std::cout << "The matrix isn't singular." << std::endl;
+    }
   std::cout << "  Solving the linear system" << std::endl;
+
   // We don't use any preconditioner for now, so we pass the identity matrix
   // as preconditioner.
-  solver.solve(system_matrix, solution, system_rhs, PreconditionIdentity());
+  solver.solve(system_matrix, solution, system_rhs, preconditioner);
   std::cout << "  " << solver_control.last_step() << " CG iterations"
             << std::endl;
 }

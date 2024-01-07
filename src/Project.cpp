@@ -11,11 +11,11 @@ int
 main(int /*argc*/, char * /*argv*/[])
 {
   const std::string mesh_file_name =
-    "mesh_file_direction"
+    "../mesh/mesh-cube-5.msh";
   const unsigned int r = 1;
 
-  Poisson2D problem(mesh_file_name, r);
-
+  Poisson3D problem(mesh_file_name, r);
+  problem.initialize_diffusion_coefficient();
   problem.setup();
   problem.assemble();
   problem.solve();

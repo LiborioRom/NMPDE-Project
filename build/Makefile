@@ -117,65 +117,65 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Project_Parallel
+# Target rules for targets named Project
 
 # Build rule for target.
-Project_Parallel: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Project_Parallel
-.PHONY : Project_Parallel
+Project: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 Project
+.PHONY : Project
 
 # fast build rule for target.
-Project_Parallel/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_Parallel.dir/build.make CMakeFiles/Project_Parallel.dir/build
-.PHONY : Project_Parallel/fast
+Project/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project.dir/build.make CMakeFiles/Project.dir/build
+.PHONY : Project/fast
 
-src/Poisson3D_Parallel.o: src/Poisson3D_Parallel.cpp.o
-.PHONY : src/Poisson3D_Parallel.o
-
-# target to build an object file
-src/Poisson3D_Parallel.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_Parallel.dir/build.make CMakeFiles/Project_Parallel.dir/src/Poisson3D_Parallel.cpp.o
-.PHONY : src/Poisson3D_Parallel.cpp.o
-
-src/Poisson3D_Parallel.i: src/Poisson3D_Parallel.cpp.i
-.PHONY : src/Poisson3D_Parallel.i
-
-# target to preprocess a source file
-src/Poisson3D_Parallel.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_Parallel.dir/build.make CMakeFiles/Project_Parallel.dir/src/Poisson3D_Parallel.cpp.i
-.PHONY : src/Poisson3D_Parallel.cpp.i
-
-src/Poisson3D_Parallel.s: src/Poisson3D_Parallel.cpp.s
-.PHONY : src/Poisson3D_Parallel.s
-
-# target to generate assembly for a file
-src/Poisson3D_Parallel.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_Parallel.dir/build.make CMakeFiles/Project_Parallel.dir/src/Poisson3D_Parallel.cpp.s
-.PHONY : src/Poisson3D_Parallel.cpp.s
-
-src/Project_Parallel.o: src/Project_Parallel.cpp.o
-.PHONY : src/Project_Parallel.o
+src/Poisson3D.o: src/Poisson3D.cpp.o
+.PHONY : src/Poisson3D.o
 
 # target to build an object file
-src/Project_Parallel.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_Parallel.dir/build.make CMakeFiles/Project_Parallel.dir/src/Project_Parallel.cpp.o
-.PHONY : src/Project_Parallel.cpp.o
+src/Poisson3D.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project.dir/build.make CMakeFiles/Project.dir/src/Poisson3D.cpp.o
+.PHONY : src/Poisson3D.cpp.o
 
-src/Project_Parallel.i: src/Project_Parallel.cpp.i
-.PHONY : src/Project_Parallel.i
+src/Poisson3D.i: src/Poisson3D.cpp.i
+.PHONY : src/Poisson3D.i
 
 # target to preprocess a source file
-src/Project_Parallel.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_Parallel.dir/build.make CMakeFiles/Project_Parallel.dir/src/Project_Parallel.cpp.i
-.PHONY : src/Project_Parallel.cpp.i
+src/Poisson3D.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project.dir/build.make CMakeFiles/Project.dir/src/Poisson3D.cpp.i
+.PHONY : src/Poisson3D.cpp.i
 
-src/Project_Parallel.s: src/Project_Parallel.cpp.s
-.PHONY : src/Project_Parallel.s
+src/Poisson3D.s: src/Poisson3D.cpp.s
+.PHONY : src/Poisson3D.s
 
 # target to generate assembly for a file
-src/Project_Parallel.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project_Parallel.dir/build.make CMakeFiles/Project_Parallel.dir/src/Project_Parallel.cpp.s
-.PHONY : src/Project_Parallel.cpp.s
+src/Poisson3D.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project.dir/build.make CMakeFiles/Project.dir/src/Poisson3D.cpp.s
+.PHONY : src/Poisson3D.cpp.s
+
+src/Project.o: src/Project.cpp.o
+.PHONY : src/Project.o
+
+# target to build an object file
+src/Project.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project.dir/build.make CMakeFiles/Project.dir/src/Project.cpp.o
+.PHONY : src/Project.cpp.o
+
+src/Project.i: src/Project.cpp.i
+.PHONY : src/Project.i
+
+# target to preprocess a source file
+src/Project.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project.dir/build.make CMakeFiles/Project.dir/src/Project.cpp.i
+.PHONY : src/Project.cpp.i
+
+src/Project.s: src/Project.cpp.s
+.PHONY : src/Project.s
+
+# target to generate assembly for a file
+src/Project.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Project.dir/build.make CMakeFiles/Project.dir/src/Project.cpp.s
+.PHONY : src/Project.cpp.s
 
 # Help Target
 help:
@@ -185,13 +185,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... Project_Parallel"
-	@echo "... src/Poisson3D_Parallel.o"
-	@echo "... src/Poisson3D_Parallel.i"
-	@echo "... src/Poisson3D_Parallel.s"
-	@echo "... src/Project_Parallel.o"
-	@echo "... src/Project_Parallel.i"
-	@echo "... src/Project_Parallel.s"
+	@echo "... Project"
+	@echo "... src/Poisson3D.o"
+	@echo "... src/Poisson3D.i"
+	@echo "... src/Poisson3D.s"
+	@echo "... src/Project.o"
+	@echo "... src/Project.i"
+	@echo "... src/Project.s"
 .PHONY : help
 
 

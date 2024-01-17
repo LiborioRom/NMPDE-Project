@@ -142,8 +142,17 @@ Poisson3D::assemble()
   system_matrix = 0.0;
   system_rhs    = 0.0;
 
+  //Set to get the boundaryIds
+  std::set<types::boundary_id> boundary_ids;
+
   for (const auto &cell : dof_handler.active_cell_iterators())
     {
+      for (const auto &face : cell->face_iterators()) {
+        if (face->at_boundary()) {
+            boundary_ids.insert(face->boundary_id());
+        }
+    }
+      
       // Reinitialize the FEValues object on current element. This
       // precomputes all the quantities we requested when constructing
       // FEValues (see the update_* flags above) for all quadrature nodes of
@@ -181,29 +190,6 @@ Poisson3D::assemble()
             }
         }
 
-      // If the cell is adjacent to the boundary...
-      if (cell->at_boundary())
-        {
-          // ...we loop over its edges (referred to as faces in the deal.II
-          // jargon).
-          for (unsigned int face_number = 0; face_number < cell->n_faces();
-               ++face_number)
-            {
-              // If current face lies on the boundary, and its boundary ID (or
-              // tag) is that of one of the Neumann boundaries, we assemble the
-              // boundary integral.
-              if (cell->face(face_number)->at_boundary()) {
-                  const unsigned int boundary_id = cell->face(face_number)->boundary_id();
-                  if (boundary_id >= 0 && boundary_id <= 5) {
-                      fe_values_boundary.reinit(cell, face_number);
-                      for (unsigned int q = 0; q < quadrature_boundary->size(); ++q)
-                        for (unsigned int i = 0; i < dofs_per_cell; ++i)
-                          cell_rhs(i) += 0;
-                            
-                  }
-                }
-            }
-        }
 
       // At this point the local matrix and vector are constructed: we
       // need to sum them into the global matrix and vector. To this end,
@@ -222,24 +208,25 @@ Poisson3D::assemble()
     // We construct a map that stores, for each DoF corresponding to a
     // Dirichlet condition, the corresponding value. E.g., if the Dirichlet
     // condition is u_i = b, the map will contain the pair (i, b).
-    //std::map<types::global_dof_index, double> boundary_values;
+    std::map<types::global_dof_index, double> boundary_values;
 
     // Then, we build a map that, for each boundary tag, stores the
     // corresponding boundary function.
-    //std::map<types::boundary_id, const Function<dim> *> boundary_functions;
-    //boundary_functions[0] = &function_g;
-    //boundary_functions[1] = &function_g;
+    std::map<types::boundary_id, const Function<dim> *> boundary_functions;
+    for (const auto &boundary_id : boundary_ids) {
+      boundary_functions[boundary_id] = &function_g;
+    }
 
-    // interpolate_boundary_values fills the boundary_values map.
-    //VectorTools::interpolate_boundary_values(dof_handler,
-    //                                         boundary_functions,
-    //                                         boundary_values);
+    //interpolate_boundary_values fills the boundary_values map.
+    VectorTools::interpolate_boundary_values(dof_handler,
+                                             boundary_functions,
+                                             boundary_values);
 
     // Finally, we modify the linear system to apply the boundary
     // conditions. This replaces the equations for the boundary DoFs with
     // the corresponding u_i = 0 equations.
-    //MatrixTools::apply_boundary_values(
-    //  boundary_values, system_matrix, solution, system_rhs, true);
+    MatrixTools::apply_boundary_values(
+      boundary_values, system_matrix, solution, system_rhs, true);
   }
 }
 

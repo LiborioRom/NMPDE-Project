@@ -3,5 +3,6 @@ project(NMPDE-Project LANGUAGES CXX C)
 
 include(common/cmake-common.cmake)
 
-add_executable(Project_Parallel src/Project_Parallel.cpp src/Poisson3D_Parallel.cpp)
-deal_ii_setup_target(Project_Parallel)
+add_executable(Project src/Project.cpp src/Poisson3D.cpp)
+deal_ii_setup_target(Project)
+

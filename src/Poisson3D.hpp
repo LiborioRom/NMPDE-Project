@@ -210,9 +210,6 @@ protected:
 
   DiffusionCoefficient<dim> diffusion_coefficient;
 
-  // g(x).
-  //FunctionG function_g;
-
   // h(x).
   FunctionH function_h;
   // g(x).

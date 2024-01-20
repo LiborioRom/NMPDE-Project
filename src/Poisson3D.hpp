@@ -151,37 +151,63 @@ public:
       dealii::SolverCG<> solver(solver_control);
 
       dealii::Vector<double> x(matrix.n()), b(matrix.m());
-      b = 1; // O cualquier otro vector no cero
+      b = 1; // Or any other non-zero vector
 
       try {
           solver.solve(matrix, x, b, dealii::PreconditionIdentity());
           return false;
       } catch (std::exception &e) {
-          return true; // La matriz podría ser singular o mal condicionada
+          return true; // The matrix could be singular or poorly conditioned
       }
   }
   void initialize_diffusion_coefficient() {
-        // Crear un vector de esferas
+        // Create a vector of spheres
         std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
 
-        // Generar esferas aleatorias
+        // Generate random spheres
         std::random_device rd;
         std::mt19937 gen(rd());
         std::uniform_real_distribution<> dis_center(0.0, 1.0);
-        std::uniform_real_distribution<> dis_radius(0.01, 0.1); // Radios pequeños para asegurarse de que caben en el cubo
-
+        std::uniform_real_distribution<> dis_radius(0.01, 0.1); // Small spokes to make sure they fit in the hub
         for (int i = 0; i < 10; ++i) {
             Point<dim> center = {dis_center(gen), dis_center(gen), dis_center(gen)};
             double radius = dis_radius(gen);
             spheres.push_back({center, radius});
         }
 
-        // Establecer el valor de p
+        // Set the value of p
         double p_value = 2.0;
 
-        // Inicializar el coeficiente de difusión
+        // Initialize the diffusion coefficient
         diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
   };
+  void initialize_diffusion_coefficient_symmetric() {
+    // Create a vector of spheres
+    std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
+    int n=2;
+    // Define symmetrically distributed centers
+    double step = 1.0 / (n+1);  // 'n' is the number of steps to divide each dimension
+    double radius = 0.05;       // Fixed radius for each sphere
+
+    // Generate symmetrically placed spheres
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            for (int k = 1; k <= n; ++k) {
+                if (spheres.size() < 10) {
+                    Point<dim> center = {i * step, j * step, k * step};
+                    spheres.push_back({center, radius});
+                }
+            }
+        }
+    }
+
+    // Set the value of p
+    double p_value = 2.0;
+
+    // Initialize the diffusion coefficient
+    diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
+};
+
   // Initialization.
   void
   setup();

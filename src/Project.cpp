@@ -15,7 +15,7 @@ main(int /*argc*/, char * /*argv*/[])
   const unsigned int r = 1;
 
   Poisson3D problem(mesh_file_name, r);
-  problem.initialize_diffusion_coefficient();
+  problem.initialize_diffusion_coefficient_symmetric();
   problem.setup();
   problem.assemble();
   problem.solve();

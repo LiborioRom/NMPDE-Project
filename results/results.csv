@@ -9,3 +9,4 @@ mesh-cube-40,9,jacobi,544,829
 mesh-cube-40,9,jacobi,530,829
 paralepiped.geo,9,jacobi,0,7
 paralepiped,9,jacobi,0,0
+mesh-cube-20,4,jacobi,17,204

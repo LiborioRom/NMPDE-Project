@@ -238,10 +238,12 @@ Poisson3D::solve()
   // Here we specify the maximum number of iterations of the iterative solver,
   // and its tolerance.
   SolverControl solver_control(10000, 1e-6 * system_rhs.l2_norm());
-
+  for (unsigned int i = 0; i < solution.size(); ++i) {
+      solution[i] = 0.0;
+  }
   // Since the system matrix is symmetric and positive definite, we solve the
   // system using the conjugate gradient method.
-  SolverGMRES<Vector<double>> solver(solver_control);
+  SolverCG<Vector<double>> solver(solver_control);
   
   PreconditionIdentity preconditioner;
 

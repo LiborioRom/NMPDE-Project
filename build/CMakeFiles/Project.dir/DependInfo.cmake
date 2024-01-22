@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Poisson3D.cpp" "CMakeFiles/Project.dir/src/Poisson3D.cpp.o" "gcc" "CMakeFiles/Project.dir/src/Poisson3D.cpp.o.d"
-  "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Project.cpp" "CMakeFiles/Project.dir/src/Project.cpp.o" "gcc" "CMakeFiles/Project.dir/src/Project.cpp.o.d"
+  "/home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Poisson3D.cpp" "CMakeFiles/Project.dir/src/Poisson3D.cpp.o" "gcc" "CMakeFiles/Project.dir/src/Poisson3D.cpp.o.d"
+  "/home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Project.cpp" "CMakeFiles/Project.dir/src/Project.cpp.o" "gcc" "CMakeFiles/Project.dir/src/Project.cpp.o.d"
   )
 
 # Targets to which this target links.

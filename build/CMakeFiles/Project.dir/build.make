@@ -53,10 +53,10 @@ RM = /u/sw/toolchains/gcc-glibc/11.2.0/base/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project"
+CMAKE_SOURCE_DIR = /home/filippo/Desktop/copia_progetto/NMPDE-Project
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build"
+CMAKE_BINARY_DIR = /home/filippo/Desktop/copia_progetto/NMPDE-Project/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/Project.dir/depend.make
@@ -72,30 +72,30 @@ include CMakeFiles/Project.dir/flags.make
 CMakeFiles/Project.dir/src/Project.cpp.o: CMakeFiles/Project.dir/flags.make
 CMakeFiles/Project.dir/src/Project.cpp.o: ../src/Project.cpp
 CMakeFiles/Project.dir/src/Project.cpp.o: CMakeFiles/Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Project.dir/src/Project.cpp.o"
-	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Project.dir/src/Project.cpp.o -MF CMakeFiles/Project.dir/src/Project.cpp.o.d -o CMakeFiles/Project.dir/src/Project.cpp.o -c "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Project.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/filippo/Desktop/copia_progetto/NMPDE-Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Project.dir/src/Project.cpp.o"
+	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Project.dir/src/Project.cpp.o -MF CMakeFiles/Project.dir/src/Project.cpp.o.d -o CMakeFiles/Project.dir/src/Project.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Project.cpp
 
 CMakeFiles/Project.dir/src/Project.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Project.dir/src/Project.cpp.i"
-	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Project.cpp" > CMakeFiles/Project.dir/src/Project.cpp.i
+	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Project.cpp > CMakeFiles/Project.dir/src/Project.cpp.i
 
 CMakeFiles/Project.dir/src/Project.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Project.dir/src/Project.cpp.s"
-	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Project.cpp" -o CMakeFiles/Project.dir/src/Project.cpp.s
+	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Project.cpp -o CMakeFiles/Project.dir/src/Project.cpp.s
 
 CMakeFiles/Project.dir/src/Poisson3D.cpp.o: CMakeFiles/Project.dir/flags.make
 CMakeFiles/Project.dir/src/Poisson3D.cpp.o: ../src/Poisson3D.cpp
 CMakeFiles/Project.dir/src/Poisson3D.cpp.o: CMakeFiles/Project.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir="/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Project.dir/src/Poisson3D.cpp.o"
-	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Project.dir/src/Poisson3D.cpp.o -MF CMakeFiles/Project.dir/src/Poisson3D.cpp.o.d -o CMakeFiles/Project.dir/src/Poisson3D.cpp.o -c "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Poisson3D.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/filippo/Desktop/copia_progetto/NMPDE-Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Project.dir/src/Poisson3D.cpp.o"
+	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Project.dir/src/Poisson3D.cpp.o -MF CMakeFiles/Project.dir/src/Poisson3D.cpp.o.d -o CMakeFiles/Project.dir/src/Poisson3D.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Poisson3D.cpp
 
 CMakeFiles/Project.dir/src/Poisson3D.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/Project.dir/src/Poisson3D.cpp.i"
-	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Poisson3D.cpp" > CMakeFiles/Project.dir/src/Poisson3D.cpp.i
+	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Poisson3D.cpp > CMakeFiles/Project.dir/src/Poisson3D.cpp.i
 
 CMakeFiles/Project.dir/src/Poisson3D.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/Project.dir/src/Poisson3D.cpp.s"
-	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/src/Poisson3D.cpp" -o CMakeFiles/Project.dir/src/Poisson3D.cpp.s
+	/u/sw/toolchains/gcc-glibc/11.2.0/base/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/filippo/Desktop/copia_progetto/NMPDE-Project/src/Poisson3D.cpp -o CMakeFiles/Project.dir/src/Poisson3D.cpp.s
 
 # Object files for target Project
 Project_OBJECTS = \
@@ -235,7 +235,7 @@ Project: /u/sw/toolchains/gcc-glibc/11.2.0/base/lib/libmpi_usempi_ignore_tkr.so
 Project: /u/sw/toolchains/gcc-glibc/11.2.0/base/lib/libmpi_mpifh.so
 Project: /u/sw/toolchains/gcc-glibc/11.2.0/base/lib/libmpi.so
 Project: CMakeFiles/Project.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir="/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Project"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/filippo/Desktop/copia_progetto/NMPDE-Project/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Project"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Project.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -247,6 +247,6 @@ CMakeFiles/Project.dir/clean:
 .PHONY : CMakeFiles/Project.dir/clean
 
 CMakeFiles/Project.dir/depend:
-	cd "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project" "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project" "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build" "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build" "/mnt/c/Users/alvar/OneDrive/Escritorio/Projecto NMPDE/NMPDE-Project/build/CMakeFiles/Project.dir/DependInfo.cmake" --color=$(COLOR)
+	cd /home/filippo/Desktop/copia_progetto/NMPDE-Project/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/filippo/Desktop/copia_progetto/NMPDE-Project /home/filippo/Desktop/copia_progetto/NMPDE-Project /home/filippo/Desktop/copia_progetto/NMPDE-Project/build /home/filippo/Desktop/copia_progetto/NMPDE-Project/build /home/filippo/Desktop/copia_progetto/NMPDE-Project/build/CMakeFiles/Project.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/Project.dir/depend
 

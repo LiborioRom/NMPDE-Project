@@ -1,5 +1,62 @@
 #include "Poisson3D.hpp"
 
+
+void
+Poisson3D::write_csv(const long int elapsed_time, int iterations) const{
+    std::ofstream csv_file;
+    csv_file.open("../results/results.csv", std::ios_base::app);
+
+    if (!csv_file.is_open()) {
+        std::cerr<<"Error! Cannot open csv file! ";
+        return ;
+    }
+
+
+
+    csv_file << extractFileName(mesh_file_name) << ","
+             << p_value <<","
+             << preconditioner_name << ","
+             << elapsed_time<<","
+             << iterations
+             << std::endl;
+    csv_file.close();
+
+    std::cout<< "CSV write successful."<<std::endl;
+}
+
+std::string
+Poisson3D::extractFileName(const std::string& filePath) {
+
+    size_t lastSlash = filePath.find_last_of("/\\");
+
+
+    std::string fileName = filePath.substr(lastSlash + 1);
+
+
+    size_t lastDot = fileName.find_last_of(".");
+
+
+    return fileName.substr(0, lastDot);
+}
+
+void
+Poisson3D::manage_flags(int argc, char **argv) {
+
+    if(argc != 4)
+    {
+        std::cerr<<"Error! Wrong number of input parameters!"<<std::endl;
+        std::exit(-1);
+    }
+    preconditioner_name = argv[2];
+    p_value = std::stod(argv[3]);
+
+    std::cout<<"Setting preconditioner: "<<preconditioner_name<<std::endl;
+    std::cout<<"Setting p_value: "<<p_value<<std::endl;
+
+   initialize_diffusion_coefficient_symmetric(p_value);
+
+}
+
 void
 Poisson3D::setup()
 {
@@ -241,23 +298,55 @@ Poisson3D::solve()
   for (unsigned int i = 0; i < solution.size(); ++i) {
       solution[i] = 0.0;
   }
-  // Since the system matrix is symmetric and positive definite, we solve the
-  // system using the conjugate gradient method.
+
+
+  const auto t0 = std::chrono::high_resolution_clock::now();
+
   SolverCG<Vector<double>> solver(solver_control);
-  
-  PreconditionIdentity preconditioner;
+  SolverGMRES<Vector<double>> GMRESsolver(solver_control);
 
-  //PreconditionJacobi preconditioner;
-  //preconditioner.initialize(system_matrix);
 
-  //PreconditionSOR preconditioner;
-  //preconditioner.initialize(
-  //  system_matrix, PreconditionSOR<SparseMatrix<double>>::AdditionalData(1.0));
+  if (preconditioner_name == "identity")
+  {
+      std::cout<<"Using preconditioner identity"<<std::endl;
+      PreconditionIdentity preconditioner;
+      solver.solve(system_matrix, solution, system_rhs, preconditioner);
+  }else if (preconditioner_name == "jacobi"){
+      std::cout<<"Using preconditioner jacobi"<<std::endl;
+      PreconditionJacobi preconditioner;
+      preconditioner.initialize(system_matrix);
+      solver.solve(system_matrix, solution, system_rhs, preconditioner);
+  }else if (preconditioner_name == "ssor"){
+      std::cout<<"Using preconditioner ssor"<<std::endl;
+      PreconditionSSOR preconditioner;
+      preconditioner.initialize(
+        system_matrix,
+        PreconditionSSOR<SparseMatrix<double>>::AdditionalData(1.0)
+        );
+      solver.solve(system_matrix, solution, system_rhs, preconditioner);
 
-  //PreconditionSSOR preconditioner;
-  //preconditioner.initialize(
-  //  system_matrix,
-  //  PreconditionSSOR<SparseMatrix<double>>::AdditionalData(1.0));
+  }else if (preconditioner_name == "sor"){
+
+      std::cout<<"Using preconditioner sor"<<std::endl;
+      std::cout<<"WARNING: not symmetric preconditioner, hence solving with GMRES and not GC"<<std::endl;
+      PreconditionSOR preconditioner;
+      preconditioner.initialize(
+        system_matrix, PreconditionSOR<SparseMatrix<double>>::AdditionalData(1.0)
+        );
+      GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+  }
+  else{
+      std::cerr<<"Error! Preconditioner not supported!"<<std::endl;
+      std::exit(-1);
+  }
+
+
+  const auto t1 = std::chrono::high_resolution_clock::now();
+  const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+  std::cout<<"Elapsed time for solve phase: "
+             << dt << " [ms] " << std::endl;
+
+
 
   if (isMatrixSingular(system_matrix)) {
         std::cout << "The matrix is singular." << std::endl;
@@ -266,11 +355,12 @@ Poisson3D::solve()
     }
   std::cout << "  Solving the linear system" << std::endl;
 
-  // We don't use any preconditioner for now, so we pass the identity matrix
-  // as preconditioner.
-  solver.solve(system_matrix, solution, system_rhs, preconditioner);
-  std::cout << "  " << solver_control.last_step() << " CG iterations"
+
+  std::cout << "  " << solver_control.last_step() << " iterations"
             << std::endl;
+
+  write_csv(dt, solver_control.last_step());
+
 }
 
 void
@@ -302,3 +392,6 @@ Poisson3D::output() const
 
   std::cout << "===============================================" << std::endl;
 }
+
+
+

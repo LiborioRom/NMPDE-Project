@@ -160,7 +160,7 @@ public:
           return true; // The matrix could be singular or poorly conditioned
       }
   }
-  void initialize_diffusion_coefficient() {
+  void initialize_diffusion_coefficient(double p_value) {
         // Create a vector of spheres
         std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
 
@@ -175,13 +175,12 @@ public:
             spheres.push_back({center, radius});
         }
 
-        // Set the value of p
-        double p_value = 2.0;
+
 
         // Initialize the diffusion coefficient
         diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
   };
-  void initialize_diffusion_coefficient_symmetric() {
+  void initialize_diffusion_coefficient_symmetric(double p_value) {
     // Create a vector of spheres
     std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
     int n=2;
@@ -201,12 +200,19 @@ public:
         }
     }
 
-    // Set the value of p
-    double p_value = 2.0;
 
     // Initialize the diffusion coefficient
     diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
 };
+
+  void
+  manage_flags(int argc, char ** argv);
+
+  void
+  write_csv(const long int elapsed_time, int iterations) const;
+
+  static std::string
+  extractFileName(const std::string& filePath);
 
   // Initialization.
   void
@@ -228,6 +234,9 @@ protected:
   // Path to the mesh file.
   const std::string mesh_file_name;
 
+  std::string preconditioner_name;
+
+  double p_value;
   // Polynomial degree.
   const unsigned int r;
 

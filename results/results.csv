@@ -1,0 +1,11 @@
+mesh,p_value,preconditioner,elapsed_time,iterations
+mesh-cube-20,3,jacobi,12,157
+mesh-cube-20,9,jacobi,37,452
+mesh-cube-20,9,jacobi,36,452
+mesh-cube-20,9,sor,11,28
+mesh-cube-20,9,sor,11,28
+mesh-cube-40,9,sor,154,62
+mesh-cube-40,9,jacobi,544,829
+mesh-cube-40,9,jacobi,530,829
+paralepiped.geo,9,jacobi,0,7
+paralepiped,9,jacobi,0,0

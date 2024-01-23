@@ -14,6 +14,6 @@ for PRECONDITIONER in "${PRECONDITIONERS[@]}"
 do
 for ((c=1; c<=10; c++))
 do
-  ./Project "$MESH" "$PRECONDITIONER" "$P_VALUE"
+  ./Project -m "$MESH"  -P "$PRECONDITIONER" -p "$P_VALUE"
 done
 done

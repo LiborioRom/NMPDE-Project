@@ -25,6 +25,9 @@
 #include <deal.II/lac/trilinos_vector.h>
 #include <deal.II/lac/trilinos_sparse_matrix.h>
 
+#include <deal.II/lac/eigen.h> //For power method
+#include <deal.II/lac/vector_memory.h> // Power method
+
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
@@ -44,6 +47,7 @@ using namespace dealii;
 /**
  * Class managing the differential problem.
  */
+
 class Poisson3D
 {
 public:
@@ -167,6 +171,7 @@ public:
           return true; // The matrix could be singular or poorly conditioned
       }
   }
+
   void initialize_diffusion_coefficient(double p_value) {
         // Create a vector of spheres
         std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
@@ -187,6 +192,7 @@ public:
         // Initialize the diffusion coefficient
         diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
   };
+
   void initialize_diffusion_coefficient_symmetric(double p_value) {
     // Create a vector of spheres
     std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
@@ -243,6 +249,7 @@ protected:
 
   std::string preconditioner_name;
 
+  bool symmetric;
   double p_value;
   // Polynomial degree.
   unsigned int r;
@@ -252,6 +259,8 @@ protected:
 
   DiffusionCoefficient<dim> diffusion_coefficient;
 
+
+  //! Should we remove the members h, g?
   // h(x).
   FunctionH function_h;
   // g(x).

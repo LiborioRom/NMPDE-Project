@@ -2237,6 +2237,10 @@ CMakeFiles/Project.dir/src/Poisson3D.cpp.o: \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/trilinos/13.0.1/include/Epetra_Export.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/trilinos/13.0.1/include/Epetra_FECrsMatrix.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/trilinos/13.0.1/include/Epetra_Operator.h \
+ /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/lac/eigen.h \
+ /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/lac/linear_operator.h \
+ /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/lac/solver_minres.h \
+ /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/base/signaling_nan.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/numerics/data_out.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/grid/filtered_iterator.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/numerics/data_out_dof_data.h \
@@ -3050,7 +3054,6 @@ CMakeFiles/Project.dir/src/Poisson3D.cpp.o: \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/grid/grid_tools_cache.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/grid/grid_tools_cache_update_flags.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/matrix_free/fe_point_evaluation.h \
- /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/base/signaling_nan.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/matrix_free/evaluation_flags.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/numerics/vector_tools_integrate_difference.h \
  /u/sw/toolchains/gcc-glibc/11.2.0/pkgs/dealii/9.3.1/include/deal.II/numerics/vector_tools_interpolate.h \

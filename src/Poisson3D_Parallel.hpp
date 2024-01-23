@@ -47,13 +47,11 @@ using namespace dealii;
 class Poisson3DParallel
 {
 public:
+
   // Physical dimension (1D, 2D, 3D)
   static constexpr unsigned int dim = 3;
 
   // Diffusion coefficient.
-  // In deal.ii, functions are implemented by deriving the dealii::Function
-  // class, which provides an interface for the computation of function values
-  // and their derivatives.
   template <int dim>
   class DiffusionCoefficient : public Function<dim>
   {
@@ -97,7 +95,6 @@ public:
       }
   };
 
-
   // Forcing term.
   class ForcingTerm : public Function<dim>
   {
@@ -115,48 +112,49 @@ public:
     }
   };
 
-  // Neumann boundary conditions.
-  class FunctionH : public Function<dim>
-  {
-  public:
-    // Constructor.
-    FunctionH()
-    {}
+    // Neumann boundary conditions.
+    class FunctionH : public Function<dim>
+    {
+    public:
+        // Constructor.
+        FunctionH()
+        {}
 
-    // Evaluation:
-    virtual double
-    value(const Point<dim> /*&p*/, const unsigned int /*component*/ = 0) const
+        // Evaluation:
+        virtual double
+        value(const Point<dim> /*&p*/, const unsigned int /*component*/ = 0) const
         {
             return 0.0;
         }
     };
-    // Dirichlet boundary conditions.
-  class FunctionG : public Function<dim>
-  {
-  public:
-    // Constructor.
-    FunctionG()
-    {}
-
-    // Evaluation.
-    virtual double
-    value(const Point<dim> & /*p*/,
-          const unsigned int /*component*/ = 0) const override
+// Dirichlet boundary conditions.
+    class FunctionG : public Function<dim>
     {
-      return 0.0;
-    }
-  };
+    public:
+        // Constructor.
+        FunctionG()
+        {}
 
-  // Constructor.
-  Poisson3DParallel(const std::string &mesh_file_name_, const unsigned int &r_)
-    : mesh_file_name(mesh_file_name_)
-    , r(r_)
-    , mpi_size(Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD))
-    , mpi_rank(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD))
-    , mesh(MPI_COMM_WORLD)
-    , pcout(std::cout, mpi_rank == 0)
-  {}
-    void initialize_diffusion_coefficient() {
+        // Evaluation.
+        virtual double
+        value(const Point<dim> & /*p*/,
+              const unsigned int /*component*/ = 0) const override
+        {
+            return 0.0;
+        }
+    };
+
+
+    // Constructor.
+  Poisson3DParallel():
+    mpi_size(Utilities::MPI::n_mpi_processes(MPI_COMM_WORLD)),
+    mpi_rank(Utilities::MPI::this_mpi_process(MPI_COMM_WORLD)),
+    mesh(MPI_COMM_WORLD),
+    pcout(std::cout, mpi_rank == 0)
+  {};
+
+
+  void initialize_diffusion_coefficient(double p_value) {
         // Crear un vector de esferas
         std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
 
@@ -172,12 +170,33 @@ public:
             spheres.push_back({center, radius});
         }
 
-        // Establecer el valor de p
-        double p_value = 2.0;
 
         // Inicializar el coeficiente de difusión
         diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
     };
+
+  void initialize_diffusion_coefficient_symmetric(double p_value) {
+        // Create a vector of spheres
+        std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
+        int n=2;
+        // Define symmetrically distributed centers
+        double step = 1.0 / (n+1);  // 'n' is the number of steps to divide each dimension
+        double radius = 0.05;       // Fixed radius for each sphere
+
+        // Generate symmetrically placed spheres
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                for (int k = 1; k <= n; ++k) {
+                    if (spheres.size() < 10) {
+                        Point<dim> center = {i * step, j * step, k * step};
+                        spheres.push_back({center, radius});
+                    }
+                }
+            }
+        }
+      // Initialize the diffusion coefficient
+      diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
+  };
   // Initialization.
   void
   setup();
@@ -194,12 +213,37 @@ public:
   void
   output() const;
 
+  /*
+   * CUSTOM PUBLIC MEMBERS (SOME CAN BE MADE PROTECTED)
+   */
+
+  void
+  manage_flags(int argc, char ** argv);
+
+  void
+  write_csv(const long int elapsed_time, int iterations) const;
+
+  static std::string
+  extractFileName(const std::string& filePath);
+
 protected:
   // Path to the mesh file.
-  const std::string mesh_file_name;
+  std::string mesh_file_name;
+
+  /*
+   * CUSTOM PROTECTED MEMBERS
+   */
+
+  std::string preconditioner_name;
+
+  bool symmetric;
+
+  double p_value;
 
   // Polynomial degree.
-  const unsigned int r;
+  unsigned int r; //Modified from const unsigned
+
+  /********END CUSTOM MEMBERS*******/
 
   // Number of MPI processes.
   const unsigned int mpi_size;
@@ -213,8 +257,12 @@ protected:
   // Forcing term.
   ForcingTerm forcing_term;
 
-  // g(x).
-  FunctionG function_g;
+    // h(x).
+    FunctionH function_h;
+
+    // g(x).
+    FunctionG function_g;
+
 
   // Triangulation. The parallel::fullydistributed::Triangulation class manages
   // a triangulation that is completely distributed (i.e. each process only

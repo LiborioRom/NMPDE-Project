@@ -16,7 +16,9 @@ Poisson3D::write_csv(const long int elapsed_time, int iterations) const{
              << r <<","
              << preconditioner_name << ","
              << elapsed_time<<","
-             << iterations
+             << iterations <<","
+             << symmetric <<","
+             << 0
              << std::endl;
     csv_file.close();
 
@@ -50,7 +52,7 @@ Poisson3D::manage_flags(int argc, char **argv) {
     preconditioner_name = "identity";
     p_value = 2;
     r = 1;
-    bool symmetric_coefficient = true;
+    symmetric = true;
     std::string user_choice_for_coefficient_symmetry;
 
 
@@ -90,7 +92,7 @@ Poisson3D::manage_flags(int argc, char **argv) {
             case 's':
                 user_choice_for_coefficient_symmetry = optarg;
                 if (user_choice_for_coefficient_symmetry == "no") {
-                    symmetric_coefficient = false;
+                    symmetric = false;
                     std::cout<<"Initializing randomly an unsymmetric diffusion coefficient " << std::endl;
                 }
                 else
@@ -110,7 +112,7 @@ Poisson3D::manage_flags(int argc, char **argv) {
 
    mesh_file_name = "../mesh/" + mesh_name_no_path;
 
-   if(symmetric_coefficient)
+   if(symmetric)
        initialize_diffusion_coefficient_symmetric(p_value);
    else
        initialize_diffusion_coefficient(p_value);

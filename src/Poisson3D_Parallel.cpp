@@ -1,5 +1,125 @@
 #include "Poisson3D_Parallel.hpp"
 
+
+void
+Poisson3DParallel::write_csv(const long int elapsed_time, int iterations) const{
+    std::ofstream csv_file;
+    csv_file.open("../results/results.csv", std::ios_base::app);
+
+    if (!csv_file.is_open()) {
+        std::cerr<<"Error! Cannot open csv file! ";
+        return ;
+    }
+
+    csv_file << extractFileName(mesh_file_name) << ","
+             << p_value <<","
+             << r <<","
+             << preconditioner_name << ","
+             << elapsed_time<<","
+             << iterations <<","
+             << symmetric <<","
+             << mpi_size
+             << std::endl;
+    csv_file.close();
+
+    pcout<< "CSV write successful."<<std::endl;
+}
+
+std::string
+Poisson3DParallel::extractFileName(const std::string& filePath) {
+
+    size_t lastSlash = filePath.find_last_of("/\\");
+
+
+    std::string fileName = filePath.substr(lastSlash + 1);
+
+
+    size_t lastDot = fileName.find_last_of(".");
+
+
+    return fileName.substr(0, lastDot);
+}
+
+void
+Poisson3DParallel::manage_flags(int argc, char **argv) {
+
+
+    /*
+     * DEFAULT INITIALIZATIONS OF PARAMETERS
+     */
+
+    std::string mesh_name_no_path = "mesh-cube-20.msh";
+    preconditioner_name = "identity";
+    p_value = 2;
+    r = 1;
+    symmetric = true;
+    std::string user_choice_for_coefficient_symmetry;
+
+
+    /*
+     * MANAGING COMMAND LINE FLAGS
+     */
+
+    int opt;
+    const char *options = "hp:m:r:P:s:";
+
+    while ((opt = getopt(argc, argv, options))!=-1){
+        switch (opt) {
+            case 'h':
+                pcout << "Help message "<<std::endl;
+                break;
+
+            case 'p':
+                p_value = std::stod(optarg);
+                pcout<<"Setting p="<<p_value<<std::endl;
+                break;
+
+            case 'm':
+                mesh_name_no_path = optarg;
+                pcout<<"Setting mesh="<<mesh_name_no_path<<std::endl;
+                break;
+
+            case 'P':
+                preconditioner_name = optarg;
+                pcout<<"Setting preconditioner=" <<preconditioner_name<<std::endl;
+                break;
+
+            case 'r':
+                r = std::stoi(optarg);
+                pcout<<"Setting r="<<r<<std::endl;
+                break;
+
+            case 's':
+                user_choice_for_coefficient_symmetry = optarg;
+                if (user_choice_for_coefficient_symmetry == "no") {
+                    symmetric = false;
+                    pcout<<"Initializing randomly an unsymmetric diffusion coefficient " << std::endl;
+                }
+                else
+                    pcout<<"Initializing non-randomly a symmetric diffusion coefficient "<< std::endl;
+
+                break;
+            case '?':
+                std::cerr << "Unknown command line option\n";
+                return;
+
+            default:
+                pcout<<"default"<<std::endl;
+                break;
+        }
+
+    }
+
+    mesh_file_name = "../mesh/" + mesh_name_no_path;
+
+    if(symmetric)
+        initialize_diffusion_coefficient_symmetric(p_value);
+    else
+        initialize_diffusion_coefficient(p_value);
+
+}
+
+
 void
 Poisson3DParallel::setup()
 {
@@ -54,7 +174,7 @@ Poisson3DParallel::setup()
    }
     quadrature_boundary = std::make_unique<QGaussSimplex<dim - 1>>(r + 1);
 
-    std::cout << "  Quadrature points per boundary cell = "
+    pcout << "  Quadrature points per boundary cell = "
               << quadrature_boundary->size() << std::endl;
 
   pcout << "-----------------------------------------------" << std::endl;
@@ -206,19 +326,60 @@ Poisson3DParallel::solve()
   // interface: we only have to use appropriate classes, compatible with
   // Trilinos linear algebra.
   SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
-
-  TrilinosWrappers::PreconditionSSOR preconditioner;
-  preconditioner.initialize(
-    system_matrix, TrilinosWrappers::PreconditionSSOR::AdditionalData(1.0));
-  //if (isMatrixSingular(system_matrix)) {
-    //    std::cout << "The matrix is singular." << std::endl;
-    //} else {
-    //    std::cout << "The matrix isn't singular." << std::endl;
-    //}
+  SolverGMRES<TrilinosWrappers::MPI::Vector> GMRESsolver(solver_control);
 
   pcout << "  Solving the linear system" << std::endl;
-  solver.solve(system_matrix, solution, system_rhs, preconditioner);
-  pcout << "  " << solver_control.last_step() << " CG iterations" << std::endl;
+  const auto t0 = std::chrono::high_resolution_clock::now();
+
+
+
+
+    if (preconditioner_name == "identity")
+    {
+        std::cout<<"Using preconditioner identity"<<std::endl;
+        TrilinosWrappers::PreconditionIdentity preconditioner;
+        solver.solve(system_matrix, solution, system_rhs, preconditioner);
+    }else if (preconditioner_name == "jacobi"){
+        std::cout<<"Using preconditioner jacobi"<<std::endl;
+        TrilinosWrappers::PreconditionJacobi preconditioner;
+        preconditioner.initialize(system_matrix);
+        solver.solve(system_matrix, solution, system_rhs, preconditioner);
+    }else if (preconditioner_name == "ssor"){
+        std::cout<<"Using preconditioner ssor"<<std::endl;
+        TrilinosWrappers::PreconditionSSOR preconditioner;
+        preconditioner.initialize(
+                system_matrix,
+                TrilinosWrappers::PreconditionSSOR::AdditionalData(1.0)
+        );
+        solver.solve(system_matrix, solution, system_rhs, preconditioner);
+
+    }else if (preconditioner_name == "sor"){
+
+        std::cout<<"Using preconditioner sor"<<std::endl;
+        std::cout<<"Not symmetric preconditioner, hence solving with GMRES and not GC"<<std::endl;
+        TrilinosWrappers::PreconditionSOR preconditioner;
+        preconditioner.initialize(
+                system_matrix, TrilinosWrappers::PreconditionSOR::AdditionalData(1.0)
+        );
+        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+    }
+    else{
+        std::cerr<<"Error! Preconditioner not supported!"<<std::endl;
+        std::exit(-1);
+    }
+
+    const auto t1= std::chrono::high_resolution_clock::now();
+
+
+    const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+    pcout<<"Elapsed time for solve phase: "
+             << dt << " [ms] " << std::endl;
+
+    pcout << "  " << solver_control.last_step() << "  iterations" << std::endl;
+
+  if (mpi_rank == 0)
+      write_csv(dt, solver_control.last_step());
+
 }
 
 void

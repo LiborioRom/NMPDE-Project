@@ -13,14 +13,12 @@ main(int argc, char *argv[])
   // This object calls MPI_Init when it is constructed, and MPI_Finalize when it
   // is destroyed. It also initializes several other libraries bundled with
   // dealii (e.g. p4est, PETSc, ...).
+
   Utilities::MPI::MPI_InitFinalize mpi_init(argc, argv);
 
-  const std::string  mesh_filename = "../mesh/mesh-cube-5.msh";
-  const unsigned int degree        = 1;
 
-  Poisson3DParallel problem(mesh_filename, degree);
-  
-  problem.initialize_diffusion_coefficient();
+  Poisson3DParallel problem;
+  problem.manage_flags(argc, argv);
   problem.setup();
   problem.assemble();
   problem.solve();

@@ -639,3 +639,819 @@ events:
         
       exitCode: 0
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-llkSCC"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-llkSCC"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-llkSCC'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_22cb6/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_22cb6.dir/build.make CMakeFiles/cmTC_22cb6.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-llkSCC'
+        Building C object CMakeFiles/cmTC_22cb6.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -fdiagnostics-color=always -o CMakeFiles/cmTC_22cb6.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-llkSCC/test_mpi.c
+        Linking C executable cmTC_22cb6
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_22cb6.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_22cb6.dir/test_mpi.c.o -o cmTC_22cb6  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-llkSCC'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5FZhJv"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5FZhJv"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5FZhJv'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_386b9/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_386b9.dir/build.make CMakeFiles/cmTC_386b9.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5FZhJv'
+        Building CXX object CMakeFiles/cmTC_386b9.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_386b9.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5FZhJv/test_mpi.cpp
+        Linking CXX executable cmTC_386b9
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_386b9.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_386b9.dir/test_mpi.cpp.o -o cmTC_386b9  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5FZhJv'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2ohwR3"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2ohwR3"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2ohwR3'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0b2ae/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_0b2ae.dir/build.make CMakeFiles/cmTC_0b2ae.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2ohwR3'
+        Building CXX object CMakeFiles/cmTC_0b2ae.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_0b2ae.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2ohwR3/test_mpi.cpp
+        Linking CXX executable cmTC_0b2ae
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0b2ae.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_0b2ae.dir/test_mpi.cpp.o -o cmTC_0b2ae  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2ohwR3'
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-TxvRW4"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-TxvRW4"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-TxvRW4'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_468b5/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_468b5.dir/build.make CMakeFiles/cmTC_468b5.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-TxvRW4'
+        Building C object CMakeFiles/cmTC_468b5.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -fdiagnostics-color=always -o CMakeFiles/cmTC_468b5.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-TxvRW4/test_mpi.c
+        Linking C executable cmTC_468b5
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_468b5.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_468b5.dir/test_mpi.c.o -o cmTC_468b5  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-TxvRW4'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-7wVmK3"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-7wVmK3"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-7wVmK3'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b6ef5/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b6ef5.dir/build.make CMakeFiles/cmTC_b6ef5.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-7wVmK3'
+        Building CXX object CMakeFiles/cmTC_b6ef5.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_b6ef5.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-7wVmK3/test_mpi.cpp
+        Linking CXX executable cmTC_b6ef5
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b6ef5.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_b6ef5.dir/test_mpi.cpp.o -o cmTC_b6ef5  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-7wVmK3'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ZGoOFm"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ZGoOFm"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ZGoOFm'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_465bf/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_465bf.dir/build.make CMakeFiles/cmTC_465bf.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ZGoOFm'
+        Building CXX object CMakeFiles/cmTC_465bf.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_465bf.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ZGoOFm/test_mpi.cpp
+        Linking CXX executable cmTC_465bf
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_465bf.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_465bf.dir/test_mpi.cpp.o -o cmTC_465bf  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-ZGoOFm'
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LDMdNd"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LDMdNd"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LDMdNd'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f87f3/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f87f3.dir/build.make CMakeFiles/cmTC_f87f3.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LDMdNd'
+        Building C object CMakeFiles/cmTC_f87f3.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -fdiagnostics-color=always -o CMakeFiles/cmTC_f87f3.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LDMdNd/test_mpi.c
+        Linking C executable cmTC_f87f3
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f87f3.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_f87f3.dir/test_mpi.c.o -o cmTC_f87f3  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LDMdNd'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-GzUKDe"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-GzUKDe"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-GzUKDe'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_814ff/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_814ff.dir/build.make CMakeFiles/cmTC_814ff.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-GzUKDe'
+        Building CXX object CMakeFiles/cmTC_814ff.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_814ff.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-GzUKDe/test_mpi.cpp
+        Linking CXX executable cmTC_814ff
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_814ff.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_814ff.dir/test_mpi.cpp.o -o cmTC_814ff  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-GzUKDe'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5fbVC0"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5fbVC0"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5fbVC0'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_57677/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_57677.dir/build.make CMakeFiles/cmTC_57677.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5fbVC0'
+        Building CXX object CMakeFiles/cmTC_57677.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_57677.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5fbVC0/test_mpi.cpp
+        Linking CXX executable cmTC_57677
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_57677.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_57677.dir/test_mpi.cpp.o -o cmTC_57677  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5fbVC0'
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-WWA7wS"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-WWA7wS"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-WWA7wS'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d1f72/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_d1f72.dir/build.make CMakeFiles/cmTC_d1f72.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-WWA7wS'
+        Building C object CMakeFiles/cmTC_d1f72.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -fdiagnostics-color=always -o CMakeFiles/cmTC_d1f72.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-WWA7wS/test_mpi.c
+        Linking C executable cmTC_d1f72
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d1f72.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_d1f72.dir/test_mpi.c.o -o cmTC_d1f72  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-WWA7wS'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-XIrzyw"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-XIrzyw"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-XIrzyw'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_a5617/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_a5617.dir/build.make CMakeFiles/cmTC_a5617.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-XIrzyw'
+        Building CXX object CMakeFiles/cmTC_a5617.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_a5617.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-XIrzyw/test_mpi.cpp
+        Linking CXX executable cmTC_a5617
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a5617.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_a5617.dir/test_mpi.cpp.o -o cmTC_a5617  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-XIrzyw'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-YHjakw"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-YHjakw"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-YHjakw'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f3086/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f3086.dir/build.make CMakeFiles/cmTC_f3086.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-YHjakw'
+        Building CXX object CMakeFiles/cmTC_f3086.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_f3086.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-YHjakw/test_mpi.cpp
+        Linking CXX executable cmTC_f3086
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f3086.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_f3086.dir/test_mpi.cpp.o -o cmTC_f3086  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-YHjakw'
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5SCxTl"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5SCxTl"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5SCxTl'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_bf622/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_bf622.dir/build.make CMakeFiles/cmTC_bf622.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5SCxTl'
+        Building C object CMakeFiles/cmTC_bf622.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi  -o CMakeFiles/cmTC_bf622.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5SCxTl/test_mpi.c
+        Linking C executable cmTC_bf622
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_bf622.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_bf622.dir/test_mpi.c.o -o cmTC_bf622  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-5SCxTl'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-HK9bRe"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-HK9bRe"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-HK9bRe'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_50c92/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_50c92.dir/build.make CMakeFiles/cmTC_50c92.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-HK9bRe'
+        Building CXX object CMakeFiles/cmTC_50c92.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -o CMakeFiles/cmTC_50c92.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-HK9bRe/test_mpi.cpp
+        Linking CXX executable cmTC_50c92
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_50c92.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_50c92.dir/test_mpi.cpp.o -o cmTC_50c92  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-HK9bRe'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fpTxPV"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fpTxPV"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fpTxPV'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_0f76d/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_0f76d.dir/build.make CMakeFiles/cmTC_0f76d.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fpTxPV'
+        Building CXX object CMakeFiles/cmTC_0f76d.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -o CMakeFiles/cmTC_0f76d.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fpTxPV/test_mpi.cpp
+        Linking CXX executable cmTC_0f76d
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0f76d.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_0f76d.dir/test_mpi.cpp.o -o cmTC_0f76d  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-fpTxPV'
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2VEwti"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2VEwti"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2VEwti'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_cc1cc/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_cc1cc.dir/build.make CMakeFiles/cmTC_cc1cc.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2VEwti'
+        Building C object CMakeFiles/cmTC_cc1cc.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -fdiagnostics-color=always -o CMakeFiles/cmTC_cc1cc.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2VEwti/test_mpi.c
+        Linking C executable cmTC_cc1cc
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_cc1cc.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_cc1cc.dir/test_mpi.c.o -o cmTC_cc1cc  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-2VEwti'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-opAaAf"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-opAaAf"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-opAaAf'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_7be5f/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_7be5f.dir/build.make CMakeFiles/cmTC_7be5f.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-opAaAf'
+        Building CXX object CMakeFiles/cmTC_7be5f.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_7be5f.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-opAaAf/test_mpi.cpp
+        Linking CXX executable cmTC_7be5f
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7be5f.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_7be5f.dir/test_mpi.cpp.o -o cmTC_7be5f  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-opAaAf'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yf27h6"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yf27h6"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yf27h6'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_5cdee/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_5cdee.dir/build.make CMakeFiles/cmTC_5cdee.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yf27h6'
+        Building CXX object CMakeFiles/cmTC_5cdee.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_5cdee.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yf27h6/test_mpi.cpp
+        Linking CXX executable cmTC_5cdee
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_5cdee.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_5cdee.dir/test_mpi.cpp.o -o cmTC_5cdee  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yf27h6'
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-BTK3Bv"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-BTK3Bv"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-BTK3Bv'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_d7ea0/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_d7ea0.dir/build.make CMakeFiles/cmTC_d7ea0.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-BTK3Bv'
+        Building C object CMakeFiles/cmTC_d7ea0.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -fdiagnostics-color=always -o CMakeFiles/cmTC_d7ea0.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-BTK3Bv/test_mpi.c
+        Linking C executable cmTC_d7ea0
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d7ea0.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_d7ea0.dir/test_mpi.c.o -o cmTC_d7ea0  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-BTK3Bv'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-qC10ic"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-qC10ic"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-qC10ic'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_6292b/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_6292b.dir/build.make CMakeFiles/cmTC_6292b.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-qC10ic'
+        Building CXX object CMakeFiles/cmTC_6292b.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_6292b.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-qC10ic/test_mpi.cpp
+        Linking CXX executable cmTC_6292b
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6292b.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_6292b.dir/test_mpi.cpp.o -o cmTC_6292b  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-qC10ic'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-51K1Jh"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-51K1Jh"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-51K1Jh'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_f15d5/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_f15d5.dir/build.make CMakeFiles/cmTC_f15d5.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-51K1Jh'
+        Building CXX object CMakeFiles/cmTC_f15d5.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_f15d5.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-51K1Jh/test_mpi.cpp
+        Linking CXX executable cmTC_f15d5
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f15d5.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_f15d5.dir/test_mpi.cpp.o -o cmTC_f15d5  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-51K1Jh'
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-MjzqAs"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-MjzqAs"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-MjzqAs'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_e8e14/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_e8e14.dir/build.make CMakeFiles/cmTC_e8e14.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-MjzqAs'
+        Building C object CMakeFiles/cmTC_e8e14.dir/test_mpi.c.o
+        /usr/bin/cc  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -fdiagnostics-color=always -o CMakeFiles/cmTC_e8e14.dir/test_mpi.c.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-MjzqAs/test_mpi.c
+        Linking C executable cmTC_e8e14
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_e8e14.dir/link.txt --verbose=1
+        /usr/bin/cc CMakeFiles/cmTC_e8e14.dir/test_mpi.c.o -o cmTC_e8e14  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-MjzqAs'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode normal"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LuJip2"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LuJip2"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LuJip2'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_18239/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_18239.dir/build.make CMakeFiles/cmTC_18239.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LuJip2'
+        Building CXX object CMakeFiles/cmTC_18239.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_18239.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LuJip2/test_mpi.cpp
+        Linking CXX executable cmTC_18239
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_18239.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_18239.dir/test_mpi.cpp.o -o cmTC_18239  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-LuJip2'
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "/snap/clion/261/bin/cmake/linux/x64/share/cmake-3.27/Modules/FindMPI.cmake:1672 (_MPI_try_staged_settings)"
+      - "common/cmake-common.cmake:16 (find_package)"
+      - "CMakeLists.txt:4 (include)"
+    description: "The MPI test test_mpi for CXX in mode MPICXX"
+    directories:
+      source: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-SCC48o"
+      binary: "/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-SCC48o"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: ""
+      CMAKE_CXX_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_CXX_test_mpi_MPICXX"
+      cached: true
+      stdout: |
+        Change Dir: '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-SCC48o'
+        
+        Run Build Command(s): /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E env VERBOSE=1 /usr/bin/gmake -f Makefile cmTC_b5f00/fast
+        /usr/bin/gmake  -f CMakeFiles/cmTC_b5f00.dir/build.make CMakeFiles/cmTC_b5f00.dir/build
+        gmake[1]: Entering directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-SCC48o'
+        Building CXX object CMakeFiles/cmTC_b5f00.dir/test_mpi.cpp.o
+        /usr/bin/c++  -isystem /usr/lib/x86_64-linux-gnu/openmpi/include -isystem /usr/lib/x86_64-linux-gnu/openmpi/include/openmpi -std=gnu++17 -fdiagnostics-color=always -o CMakeFiles/cmTC_b5f00.dir/test_mpi.cpp.o -c /home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-SCC48o/test_mpi.cpp
+        Linking CXX executable cmTC_b5f00
+        /snap/clion/261/bin/cmake/linux/x64/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b5f00.dir/link.txt --verbose=1
+        /usr/bin/c++ CMakeFiles/cmTC_b5f00.dir/test_mpi.cpp.o -o cmTC_b5f00  -Wl,-rpath,/usr/lib/x86_64-linux-gnu/openmpi/lib /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi_cxx.so /usr/lib/x86_64-linux-gnu/openmpi/lib/libmpi.so 
+        gmake[1]: Leaving directory '/home/filippo/Desktop/copia_progetto/NMPDE-Project/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-SCC48o'
+        
+      exitCode: 0
+...

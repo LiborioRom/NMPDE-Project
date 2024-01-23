@@ -11,10 +11,9 @@ Poisson3D::write_csv(const long int elapsed_time, int iterations) const{
         return ;
     }
 
-
-
     csv_file << extractFileName(mesh_file_name) << ","
              << p_value <<","
+             << r <<","
              << preconditioner_name << ","
              << elapsed_time<<","
              << iterations
@@ -42,18 +41,79 @@ Poisson3D::extractFileName(const std::string& filePath) {
 void
 Poisson3D::manage_flags(int argc, char **argv) {
 
-    if(argc != 4)
-    {
-        std::cerr<<"Error! Wrong number of input parameters!"<<std::endl;
-        std::exit(-1);
+
+    /*
+     * DEFAULT INITIALIZATIONS OF PARAMETERS
+     */
+
+    std::string mesh_name_no_path = "mesh-cube-20.msh";
+    preconditioner_name = "identity";
+    p_value = 2;
+    r = 1;
+    bool symmetric_coefficient = true;
+    std::string user_choice_for_coefficient_symmetry;
+
+
+    /*
+     * MANAGING COMMAND LINE FLAGS
+     */
+
+    int opt;
+    const char *options = "hp:m:r:P:s:";
+
+    while ((opt = getopt(argc, argv, options))!=-1){
+        switch (opt) {
+            case 'h':
+                std::cout << "Help message "<<std::endl;
+                break;
+
+            case 'p':
+                p_value = std::stod(optarg);
+                std::cout<<"Setting p="<<p_value<<std::endl;
+                break;
+
+            case 'm':
+                mesh_name_no_path = optarg;
+                std::cout<<"Setting mesh="<<mesh_name_no_path<<std::endl;
+                break;
+
+            case 'P':
+                preconditioner_name = optarg;
+                std::cout<<"Setting preconditioner=" <<preconditioner_name<<std::endl;
+                break;
+
+            case 'r':
+                r = std::stoi(optarg);
+                std::cout<<"Setting r="<<r<<std::endl;
+                break;
+
+            case 's':
+                user_choice_for_coefficient_symmetry = optarg;
+                if (user_choice_for_coefficient_symmetry == "no") {
+                    symmetric_coefficient = false;
+                    std::cout<<"Initializing randomly an unsymmetric diffusion coefficient " << std::endl;
+                }
+                else
+                    std::cout<<"Initializing non-randomly a symmetric diffusion coefficient "<< std::endl;
+
+                break;
+            case '?':
+                std::cerr << "Unknown command line option\n";
+                return;
+
+            default:
+                std::cout<<"default"<<std::endl;
+                break;
+        }
+
     }
-    preconditioner_name = argv[2];
-    p_value = std::stod(argv[3]);
 
-    std::cout<<"Setting preconditioner: "<<preconditioner_name<<std::endl;
-    std::cout<<"Setting p_value: "<<p_value<<std::endl;
+   mesh_file_name = "../mesh/" + mesh_name_no_path;
 
-   initialize_diffusion_coefficient_symmetric(p_value);
+   if(symmetric_coefficient)
+       initialize_diffusion_coefficient_symmetric(p_value);
+   else
+       initialize_diffusion_coefficient(p_value);
 
 }
 
@@ -309,6 +369,7 @@ Poisson3D::solve()
   if (preconditioner_name == "identity")
   {
       std::cout<<"Using preconditioner identity"<<std::endl;
+      //TrilinosWrappers::PreconditionIdentity preconditioner;
       PreconditionIdentity preconditioner;
       solver.solve(system_matrix, solution, system_rhs, preconditioner);
   }else if (preconditioner_name == "jacobi"){
@@ -328,7 +389,7 @@ Poisson3D::solve()
   }else if (preconditioner_name == "sor"){
 
       std::cout<<"Using preconditioner sor"<<std::endl;
-      std::cout<<"WARNING: not symmetric preconditioner, hence solving with GMRES and not GC"<<std::endl;
+      std::cout<<"Not symmetric preconditioner, hence solving with GMRES and not GC"<<std::endl;
       PreconditionSOR preconditioner;
       preconditioner.initialize(
         system_matrix, PreconditionSOR<SparseMatrix<double>>::AdditionalData(1.0)

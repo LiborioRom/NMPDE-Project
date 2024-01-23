@@ -11,14 +11,7 @@ int
 main(int argc, char * argv[])
 {
 
-  std::string mesh_name = argv[1];
-  const std::string mesh_file_name =
-    "../mesh/" + mesh_name;   //paralepiped.geo.msh
-
-
-  const unsigned int r = 1;
-
-  Poisson3D problem(mesh_file_name, r);
+  Poisson3D problem;
   problem.manage_flags(argc, argv);
 
 

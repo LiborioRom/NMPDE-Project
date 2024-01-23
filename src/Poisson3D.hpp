@@ -21,6 +21,10 @@
 #include <deal.II/lac/sparse_matrix.h>
 #include <deal.II/lac/vector.h>
 
+#include <deal.II/lac/trilinos_precondition.h>
+#include <deal.II/lac/trilinos_vector.h>
+#include <deal.II/lac/trilinos_sparse_matrix.h>
+
 #include <deal.II/numerics/data_out.h>
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
@@ -32,6 +36,8 @@
 #include <vector>
 #include <cmath> // For pow and sqrt functions
 #include <random>
+
+#include <unistd.h> // For command line arguments
 
 using namespace dealii;
 
@@ -142,10 +148,11 @@ public:
 
 
   // Constructor.
-  Poisson3D(const std::string &mesh_file_name_, const unsigned int &r_)
-    : mesh_file_name(mesh_file_name_)
-    , r(r_)
-  {}
+  Poisson3D()
+  {};
+
+
+
   bool isMatrixSingular(dealii::SparseMatrix<double> &matrix) {
       dealii::SolverControl solver_control(1000, 1e-12);
       dealii::SolverCG<> solver(solver_control);
@@ -232,13 +239,13 @@ public:
 
 protected:
   // Path to the mesh file.
-  const std::string mesh_file_name;
+  std::string mesh_file_name = "../mesh/mesh-cube-20.msh";
 
   std::string preconditioner_name;
 
   double p_value;
   // Polynomial degree.
-  const unsigned int r;
+  unsigned int r;
 
   // Forcing term.
   ForcingTerm forcing_term;

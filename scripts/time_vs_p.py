@@ -4,9 +4,10 @@ import pandas as pd
 
 results = pd.read_csv("../results/results.csv")
 
+
 # noinspection SqlNoDataSourceInspection,SqlDialectInspection
 queried_data = sqldf('''
-SELECT mesh, p_value, preconditioner, MIN(time) as MinTime
+SELECT mesh, p_value, preconditioner, MIN(elapsed_time) as MinTime
 FROM results
 GROUP BY preconditioner, p_value
 ORDER BY preconditioner

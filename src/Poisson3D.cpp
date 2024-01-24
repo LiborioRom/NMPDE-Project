@@ -397,6 +397,16 @@ Poisson3D::solve()
         system_matrix, PreconditionSOR<SparseMatrix<double>>::AdditionalData(1.0)
         );
       GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+ 
+  }else if (preconditioner_name == "amg"){
+      std::cout<<"Using preconditioner amg"<<std::endl;
+      std::cout<<"Works for both symmetric & non symmetric hence solving with GMRES"<<std::endl;
+
+      dealii::TrilinosWrappers::PreconditionAMG preconditioner;
+
+      preconditioner.initialize(system_matrix);
+      
+      GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
   }
   else{
       std::cerr<<"Error! Preconditioner not supported!"<<std::endl;

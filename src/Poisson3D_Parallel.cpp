@@ -363,7 +363,39 @@ Poisson3DParallel::solve()
         );
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
     }
-    else{
+    else if (preconditioner_name == "ilu"){
+        std::cout<<"Using preconditioner ilu"<<std::endl;
+        TrilinosWrappers::PreconditionILU preconditioner;
+        preconditioner.initialize(system_matrix);
+        solver.solve(system_matrix, solution, system_rhs, preconditioner);
+    
+    }else if (preconditioner_name == "amg"){
+        std::cout<<"Using preconditioner amg"<<std::endl;
+        std::cout<<"Works for both symmetric & non symmetric hence solving with GMRES"<<std::endl;
+
+        dealii::TrilinosWrappers::PreconditionAMG preconditioner;
+
+        preconditioner.initialize(system_matrix);
+        
+        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+  
+    }else if (preconditioner_name == "ilut") {
+        std::cout << "Using preconditioner Incomplete LU with Threshold (ILUT)" << std::endl;
+
+        TrilinosWrappers::PreconditionILUT preconditioner;
+        preconditioner.initialize(system_matrix);
+
+        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+
+      }else if (preconditioner_name == "blockwise_direct") {
+        std::cout << "Using Blockwise Direct preconditioner" << std::endl;
+
+        TrilinosWrappers::PreconditionBlockwiseDirect preconditioner;
+        preconditioner.initialize(system_matrix);
+
+        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+          
+    }else{
         std::cerr<<"Error! Preconditioner not supported!"<<std::endl;
         std::exit(-1);
     }

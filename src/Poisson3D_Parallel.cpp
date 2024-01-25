@@ -1,8 +1,8 @@
 #include "Poisson3D_Parallel.hpp"
-
+using namespace dealii;
 
 void
-Poisson3DParallel::write_csv(const long int elapsed_time, int iterations) const{
+Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double condition_number) const{
     std::ofstream csv_file;
     csv_file.open("../results/results.csv", std::ios_base::app);
 
@@ -17,6 +17,7 @@ Poisson3DParallel::write_csv(const long int elapsed_time, int iterations) const{
              << preconditioner_name << ","
              << elapsed_time<<","
              << iterations <<","
+             << condition_number <<","
              << symmetric <<","
              << mpi_size
              << std::endl;
@@ -331,56 +332,86 @@ Poisson3DParallel::solve()
   pcout << "  Solving the linear system" << std::endl;
   const auto t0 = std::chrono::high_resolution_clock::now();
 
+  double condition_number = 0;
 
+  auto conditionNumberSlot = [&condition_number](double conditionNumber) -> double {
+      // Your code to handle the condition number, e.g., print it
+ 
+      condition_number = conditionNumber;
 
+      return conditionNumber;
+  };
 
-    if (preconditioner_name == "identity")
-    {
-        std::cout<<"Using preconditioner identity"<<std::endl;
+  solver.connect_condition_number_slot(conditionNumberSlot, false);
+  GMRESsolver.connect_condition_number_slot(conditionNumberSlot, false);
+
+    if (preconditioner_name == "identity"){
+
+        pcout<<"Using preconditioner identity"<<std::endl;
         TrilinosWrappers::PreconditionIdentity preconditioner;
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
+
     }else if (preconditioner_name == "jacobi"){
-        std::cout<<"Using preconditioner jacobi"<<std::endl;
+
+        pcout<<"Using preconditioner jacobi"<<std::endl;
         TrilinosWrappers::PreconditionJacobi preconditioner;
         preconditioner.initialize(system_matrix);
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
+
     }else if (preconditioner_name == "ssor"){
-        std::cout<<"Using preconditioner ssor"<<std::endl;
+
+        pcout<<"Using preconditioner ssor"<<std::endl;
         TrilinosWrappers::PreconditionSSOR preconditioner;
         preconditioner.initialize(
-                system_matrix,
-                TrilinosWrappers::PreconditionSSOR::AdditionalData(1.0)
-        );
+        system_matrix,TrilinosWrappers::PreconditionSSOR::AdditionalData(1.0));
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
 
     }else if (preconditioner_name == "sor"){
 
-        std::cout<<"Using preconditioner sor"<<std::endl;
-        std::cout<<"Not symmetric preconditioner, hence solving with GMRES and not GC"<<std::endl;
+        pcout<<"Using preconditioner sor"<<std::endl;
+        pcout<<"Not a symmetric preconditioner, hence solving with GMRES and not GC"<<std::endl;
         TrilinosWrappers::PreconditionSOR preconditioner;
-        preconditioner.initialize(
-                system_matrix, TrilinosWrappers::PreconditionSOR::AdditionalData(1.0)
-        );
+        preconditioner.initialize(system_matrix, TrilinosWrappers::PreconditionSOR::AdditionalData(1.0));
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-    }
-    else if (preconditioner_name == "ilu"){
-        std::cout<<"Using preconditioner ilu"<<std::endl;
+   
+    }else if (preconditioner_name == "ilu"){
+
+        pcout<<"Using preconditioner ilu"<<std::endl;
         TrilinosWrappers::PreconditionILU preconditioner;
         preconditioner.initialize(system_matrix);
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
     
+
     }else if (preconditioner_name == "amg"){
-        std::cout<<"Using preconditioner amg"<<std::endl;
-        std::cout<<"Works for both symmetric & non symmetric hence solving with GMRES"<<std::endl;
+
+        pcout<<"Using preconditioner amg"<<std::endl;
+        pcout<<"Works for both symmetric & non symmetric hence solving with GMRES"<<std::endl;
+
+        TrilinosWrappers::PreconditionAMG::AdditionalData amg_data;
+
+        // Set parameters based on your problem characteristics
+        amg_data.elliptic = true;  // Adjust based on the nature of your problem
+        amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
+        amg_data.n_cycles = 1;  // Number of multigrid cycles
+        amg_data.w_cycle = false;  // Use w-cycle if needed
+        amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
+        amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
+        amg_data.smoother_sweeps = 2;  // Number of smoother sweeps
+        amg_data.smoother_overlap = 0;  // Smoother overlap in parallel
+        amg_data.output_details = false;  // Output internal details
+        amg_data.smoother_type = "Chebyshev";  // Smoother type
+        amg_data.coarse_type = "Amesos-KLU";  // Coarsest level solver type
 
         dealii::TrilinosWrappers::PreconditionAMG preconditioner;
 
         preconditioner.initialize(system_matrix);
         
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+
   
     }else if (preconditioner_name == "ilut") {
-        std::cout << "Using preconditioner Incomplete LU with Threshold (ILUT)" << std::endl;
+
+        pcout << "Using preconditioner Incomplete LU with Threshold (ILUT)" << std::endl;
 
         TrilinosWrappers::PreconditionILUT preconditioner;
         preconditioner.initialize(system_matrix);
@@ -388,7 +419,8 @@ Poisson3DParallel::solve()
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
 
       }else if (preconditioner_name == "blockwise_direct") {
-        std::cout << "Using Blockwise Direct preconditioner" << std::endl;
+
+        pcout << "Using Blockwise Direct preconditioner" << std::endl;
 
         TrilinosWrappers::PreconditionBlockwiseDirect preconditioner;
         preconditioner.initialize(system_matrix);
@@ -396,6 +428,7 @@ Poisson3DParallel::solve()
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
           
     }else{
+
         std::cerr<<"Error! Preconditioner not supported!"<<std::endl;
         std::exit(-1);
     }
@@ -408,9 +441,11 @@ Poisson3DParallel::solve()
              << dt << " [ms] " << std::endl;
 
     pcout << "  " << solver_control.last_step() << "  iterations" << std::endl;
+    pcout << "Condition Number: " << condition_number << std::endl;
 
   if (mpi_rank == 0)
-      write_csv(dt, solver_control.last_step());
+      write_csv(dt, solver_control.last_step(),condition_number);
+
 
 }
 
@@ -460,4 +495,30 @@ Poisson3DParallel::output() const
   pcout << "Output written to " << output_file_name << std::endl;
 
   pcout << "===============================================" << std::endl;
+}
+
+void exportToMatrixMarket(const TrilinosWrappers::SparseMatrix &matrix, const std::string &filename) {
+    std::ofstream file(filename);
+
+    // Check if the file is open
+    if (!file.is_open()) {
+        std::cerr << "Error: Unable to open file " << filename << std::endl;
+        return;
+    }
+
+    // Write header
+    file << "%%MatrixMarket matrix coordinate real general\n";
+
+    // Write matrix size (number of rows, number of columns, number of non-zero entries)
+    file << matrix.m() << " " << matrix.n() << " " << matrix.n_nonzero_elements() << "\n";
+
+    // Write matrix entries
+    for (unsigned int i = 0; i < matrix.m(); ++i) {
+        for (auto it = matrix.begin(i); it != matrix.end(i); ++it) {
+            file << i+1 << " " << it->column()+1 << " " << it->value() << "\n";
+        }
+    }
+
+    // Close the file
+    file.close();
 }

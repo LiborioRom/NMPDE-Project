@@ -30,6 +30,14 @@
 #include <deal.II/numerics/matrix_tools.h>
 #include <deal.II/numerics/vector_tools.h>
 
+#include <Epetra_MpiComm.h>
+#include <Epetra_CrsMatrix.h>
+#include <Epetra_Map.h>
+#include <Epetra_Export.h>
+#include <EpetraExt_RowMatrixOut.h>
+#include <Epetra_LinearProblem.h>
+
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -213,6 +221,9 @@ public:
   void
   output() const;
 
+  // Export to matrix market.
+  void exportToMatrixMarket(const TrilinosWrappers::SparseMatrix &matrix, const std::string &filename);
+
   /*
    * CUSTOM PUBLIC MEMBERS (SOME CAN BE MADE PROTECTED)
    */
@@ -221,7 +232,7 @@ public:
   manage_flags(int argc, char ** argv);
 
   void
-  write_csv(const long int elapsed_time, int iterations) const;
+  write_csv(const long int elapsed_time, int iterations, double condition_number) const;
 
   static std::string
   extractFileName(const std::string& filePath);

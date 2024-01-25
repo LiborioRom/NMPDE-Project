@@ -45,4 +45,44 @@ mpiexec -n 4 ./Project_parallel -p 4 -P amg -r 2 -m mesh-cube-40.msh -s 0
 -m : set mesh file (without path)
 -s : Choose between symmetric (any value) /unsymmetric ("no")
 
+relation between continuity difussion problem coefficiants and discrete problem
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+we need to add these...
+-ilu 
+-ilut 
+-amg
+-blockwise_direct
+
+
+poisson3d serial :
+
+PreconditionIdentity
+PreconditionJacobi
+PreconditionSOR
+PreconditionSSOR
+
+PreconditionAMG (to be checked...)
+
+
+
+poisson3d parallel :
+
+PreconditionIdentity
+PreconditionJacobi
+PreconditionSOR
+PreconditionSSOR
 */

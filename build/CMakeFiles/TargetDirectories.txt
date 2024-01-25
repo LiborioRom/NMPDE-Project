@@ -1,0 +1,4 @@
+/home/ubuntu/Desktop/KamilREPO/NMPDE-Project/build/CMakeFiles/rebuild_cache.dir
+/home/ubuntu/Desktop/KamilREPO/NMPDE-Project/build/CMakeFiles/edit_cache.dir
+/home/ubuntu/Desktop/KamilREPO/NMPDE-Project/build/CMakeFiles/Project_parallel.dir
+/home/ubuntu/Desktop/KamilREPO/NMPDE-Project/build/CMakeFiles/Project.dir

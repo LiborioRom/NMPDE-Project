@@ -38,7 +38,7 @@
 #include <cmath> // For pow and sqrt functions
 #include <random>
 
-
+#include <Eigen/Dense>
 using namespace dealii;
 
 /**
@@ -197,6 +197,31 @@ public:
       // Initialize the diffusion coefficient
       diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
   };
+  double calcularAutovalores(const TrilinosWrappers::SparseMatrix &system_matrix) {
+    // Obtén el número de filas/columnas de la matriz
+    const unsigned int n = system_matrix.m();
+
+    // Crea una matriz Eigen a partir de la matriz Trilinos
+    Eigen::MatrixXd eigenMatrix(n, n);
+    for (unsigned int i = 0; i < n; ++i) {
+        for (unsigned int j = 0; j < n; ++j) {
+            eigenMatrix(i, j) = system_matrix(i, j);
+        }
+    }
+
+    // Calcula autovalores utilizando Eigen
+    Eigen::EigenSolver<Eigen::MatrixXd> eigenSolver(eigenMatrix);
+    Eigen::VectorXd autovalores = eigenSolver.eigenvalues().real();
+
+    // Encuentra el autovalor máximo
+    double maxAutovalor = autovalores.maxCoeff();
+
+    // Imprime el autovalor máximo
+    std::cout << "Max Autovalor: " << maxAutovalor << std::endl;
+
+    return maxAutovalor;
+    }
+
   // Initialization.
   void
   setup();

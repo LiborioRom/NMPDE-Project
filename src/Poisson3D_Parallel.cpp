@@ -327,12 +327,9 @@ Poisson3DParallel::solve()
   // Trilinos linear algebra.
   SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
   SolverGMRES<TrilinosWrappers::MPI::Vector> GMRESsolver(solver_control);
-
+  calcularAutovalores(system_matrix);
   pcout << "  Solving the linear system" << std::endl;
   const auto t0 = std::chrono::high_resolution_clock::now();
-
-
-
 
     if (preconditioner_name == "identity")
     {
@@ -363,7 +360,91 @@ Poisson3DParallel::solve()
         );
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
     }
-    else{
+   else if (preconditioner_name == "ilu") {
+    std::cout << "Using preconditioner Incomplete LU (ILU)" << std::endl;
+
+    // Configuring parameters for the Incomplete LU (ILU) preconditioner
+    TrilinosWrappers::PreconditionILU::AdditionalData ilu_data;
+
+    // Set the fill level for the ILU preconditioner
+    // Adjust this value based on the characteristics of your problem
+    ilu_data.ilu_fill = 1;
+
+    // Create and initialize the Incomplete LU (ILU) preconditioner
+    TrilinosWrappers::PreconditionILU preconditioner;
+    preconditioner.initialize(system_matrix, ilu_data);
+
+    // Solve the linear system using GMRES and the Incomplete LU (ILU) preconditioner
+    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+}else if (preconditioner_name == "ilut") {
+    std::cout << "Using preconditioner Incomplete LU with Threshold (ILUT)" << std::endl;
+
+    // Configuring parameters for the Incomplete LU with Threshold (ILUT) preconditioner
+    TrilinosWrappers::PreconditionILUT::AdditionalData ilut_data;
+
+    // Set the drop threshold for the ILUT preconditioner
+    ilut_data.ilut_drop = 0.0; // Adjust this value based on the characteristics of your problem
+
+    // Set the level of additional fill-in elements for the ILUT preconditioner
+    ilut_data.ilut_fill = 1; // Adjust this value based on the characteristics of your problem
+
+    // Set the absolute perturbation for the ILUT preconditioner
+    ilut_data.ilut_atol = 0.0; // Adjust this value based on the characteristics of your problem
+
+    // Set the scaling factor for the diagonal of the matrix for the ILUT preconditioner
+    ilut_data.ilut_rtol = 1.0; // Adjust this value based on the characteristics of your problem
+
+    // Set the overlap for the ILUT preconditioner in parallel execution
+    ilut_data.overlap = 0; // Adjust this value based on the parallel setup of your problem
+
+    // Create and initialize the Incomplete LU with Threshold (ILUT) preconditioner
+    TrilinosWrappers::PreconditionILUT preconditioner;
+    preconditioner.initialize(system_matrix, ilut_data);
+
+    // Solve the linear system using GMRES and the Incomplete LU with Threshold (ILUT) preconditioner
+    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+}else if (preconditioner_name == "amg") {
+    std::cout << "Using Algebraic Multigrid (AMG) preconditioner" << std::endl;
+
+    // Configuring parameters for the AMG preconditioner
+    TrilinosWrappers::PreconditionAMG::AdditionalData amg_data;
+
+    // Set parameters based on your problem characteristics
+    amg_data.elliptic = true;  // Adjust based on the nature of your problem
+    amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
+    amg_data.n_cycles = 1;  // Number of multigrid cycles
+    amg_data.w_cycle = false;  // Use w-cycle if needed
+    amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
+    amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
+    amg_data.smoother_sweeps = 2;  // Number of smoother sweeps
+    amg_data.smoother_overlap = 0;  // Smoother overlap in parallel
+    amg_data.output_details = false;  // Output internal details
+    amg_data.smoother_type = "Chebyshev";  // Smoother type
+    amg_data.coarse_type = "Amesos-KLU";  // Coarsest level solver type
+
+    // Create and initialize the Algebraic Multigrid (AMG) preconditioner
+    TrilinosWrappers::PreconditionAMG preconditioner;
+    preconditioner.initialize(system_matrix, amg_data);
+
+    // Solve the linear system using GMRES and the AMG preconditioner
+    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+}else if (preconditioner_name == "blockwise_direct") {
+    std::cout << "Using Blockwise Direct preconditioner" << std::endl;
+
+    // Configuring parameters for the Blockwise Direct preconditioner
+    TrilinosWrappers::PreconditionBlockwiseDirect::AdditionalData blockwise_direct_data;
+
+    // Set parameters based on your problem characteristics
+    blockwise_direct_data.overlap = 0;  // Set the overlap of local matrix portions in parallel
+
+    // Create and initialize the Blockwise Direct preconditioner
+    TrilinosWrappers::PreconditionBlockwiseDirect preconditioner;
+    preconditioner.initialize(system_matrix, blockwise_direct_data);
+
+    // Solve the linear system using GMRES and the Blockwise Direct preconditioner
+    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+}
+else{
         std::cerr<<"Error! Preconditioner not supported!"<<std::endl;
         std::exit(-1);
     }

@@ -377,11 +377,16 @@ Poisson3DParallel::solve()
     }else if (preconditioner_name == "ilu"){
 
         pcout<<"Using preconditioner ilu"<<std::endl;
+
+        TrilinosWrappers::PreconditionILU::AdditionalData ilu_data;
+
+        ilu_data.ilu_fill = 1;
+
         TrilinosWrappers::PreconditionILU preconditioner;
-        preconditioner.initialize(system_matrix);
+        preconditioner.initialize(system_matrix, ilu_data);
+
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
     
-
     }else if (preconditioner_name == "amg"){
 
         pcout<<"Using preconditioner amg"<<std::endl;
@@ -413,8 +418,25 @@ Poisson3DParallel::solve()
 
         pcout << "Using preconditioner Incomplete LU with Threshold (ILUT)" << std::endl;
 
+        TrilinosWrappers::PreconditionILUT::AdditionalData ilut_data;
+
+        // Set the drop threshold for the ILUT preconditioner
+        ilut_data.ilut_drop = 0.0; // Adjust this value based on the characteristics of your problem
+
+        // Set the level of additional fill-in elements for the ILUT preconditioner
+        ilut_data.ilut_fill = 1; // Adjust this value based on the characteristics of your problem
+
+        // Set the absolute perturbation for the ILUT preconditioner
+        ilut_data.ilut_atol = 0.0; // Adjust this value based on the characteristics of your problem
+
+        // Set the scaling factor for the diagonal of the matrix for the ILUT preconditioner
+        ilut_data.ilut_rtol = 1.0; // Adjust this value based on the characteristics of your problem
+
+        // Set the overlap for the ILUT preconditioner in parallel execution
+        ilut_data.overlap = 0; // Adjust this value based on the parallel setup of your problem
+
         TrilinosWrappers::PreconditionILUT preconditioner;
-        preconditioner.initialize(system_matrix);
+        preconditioner.initialize(system_matrix, ilut_data);
 
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
 
@@ -422,8 +444,14 @@ Poisson3DParallel::solve()
 
         pcout << "Using Blockwise Direct preconditioner" << std::endl;
 
+        TrilinosWrappers::PreconditionBlockwiseDirect::AdditionalData blockwise_direct_data;
+
+        // Set parameters based on your problem characteristics
+        blockwise_direct_data.overlap = 0;  // Set the overlap of local matrix portions in parallel
+
         TrilinosWrappers::PreconditionBlockwiseDirect preconditioner;
-        preconditioner.initialize(system_matrix);
+
+        preconditioner.initialize(system_matrix, blockwise_direct_data);
 
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
           

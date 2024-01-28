@@ -197,31 +197,40 @@ public:
       // Initialize the diffusion coefficient
       diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
   };
-  double calcularAutovalores(const TrilinosWrappers::SparseMatrix &system_matrix) {
-    // Obtén el número de filas/columnas de la matriz
-    const unsigned int n = system_matrix.m();
+  void initialize_diffusion_coefficient_symmetric_paralepiped(double p_value) {
+    // Create a vector of spheres
+    std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
+    int n = 2; // Number of divisions along each axis
 
-    // Crea una matriz Eigen a partir de la matriz Trilinos
-    Eigen::MatrixXd eigenMatrix(n, n);
-    for (unsigned int i = 0; i < n; ++i) {
-        for (unsigned int j = 0; j < n; ++j) {
-            eigenMatrix(i, j) = system_matrix(i, j);
+    // Dimensions of the parallelepiped
+    double x_length = 2.0; // Length along x-axis
+    double y_length = 1.0; // Length along y-axis
+    double z_length = 1.0; // Length along z-axis
+
+    // Calculate step size for each axis
+    double x_step = x_length / (n + 1);
+    double y_step = y_length / (n + 1);
+    double z_step = z_length / (n + 1);
+
+    double radius = 0.05; // Fixed radius for each sphere
+
+    // Generate symmetrically placed spheres within the parallelepiped
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= n; ++j) {
+            for (int k = 1; k <= n; ++k) {
+                if (spheres.size() < 10) {
+                    Point<dim> center = {-1 + i * x_step, -0.5 + j * y_step, -0.5 + k * z_step};
+                    spheres.push_back({center, radius});
+                }
+            }
         }
     }
 
-    // Calcula autovalores utilizando Eigen
-    Eigen::EigenSolver<Eigen::MatrixXd> eigenSolver(eigenMatrix);
-    Eigen::VectorXd autovalores = eigenSolver.eigenvalues().real();
+    // Initialize the diffusion coefficient
+    diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
+};
 
-    // Encuentra el autovalor máximo
-    double maxAutovalor = autovalores.maxCoeff();
-
-    // Imprime el autovalor máximo
-    std::cout << "Max Autovalor: " << maxAutovalor << std::endl;
-
-    return maxAutovalor;
-    }
-
+  
   // Initialization.
   void
   setup();
@@ -261,7 +270,7 @@ protected:
 
   std::string preconditioner_name;
 
-  bool symmetric;
+  std::string p_or_c;
 
   double p_value;
 

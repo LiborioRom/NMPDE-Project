@@ -17,7 +17,7 @@ Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double
              << preconditioner_name << ","
              << elapsed_time<<","
              << iterations <<","
-             << symmetric <<","
+             << p_or_c <<","
              << mpi_size <<","
              << cond_number
              << std::endl;
@@ -53,7 +53,7 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
     preconditioner_name = "identity";
     p_value = 2;
     r = 1;
-    symmetric = true;
+    p_or_c = "cube";
     std::string user_choice_for_coefficient_symmetry;
 
 
@@ -92,12 +92,12 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
 
             case 's':
                 user_choice_for_coefficient_symmetry = optarg;
-                if (user_choice_for_coefficient_symmetry == "no") {
-                    symmetric = false;
-                    pcout<<"Initializing randomly an unsymmetric diffusion coefficient " << std::endl;
+                if (user_choice_for_coefficient_symmetry == "cube") {
+                    p_or_c = "cube";
+                    pcout<<"Initializing a symmetric diffusion coefficient for a cube" << std::endl;
                 }
                 else
-                    pcout<<"Initializing non-randomly a symmetric diffusion coefficient "<< std::endl;
+                    pcout<<"Initializing a symmetric diffusion coefficient for a paralepiped"<< std::endl;
 
                 break;
             case '?':
@@ -113,10 +113,10 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
 
     mesh_file_name = "../mesh/" + mesh_name_no_path;
 
-    if(symmetric)
+    if(p_or_c=="cube")
         initialize_diffusion_coefficient_symmetric(p_value);
     else
-        initialize_diffusion_coefficient(p_value);
+        initialize_diffusion_coefficient_symmetric_paralepiped(p_value);
 
 }
 

@@ -246,7 +246,7 @@ public:
   manage_flags(int argc, char ** argv);
 
   void
-  write_csv(const long int elapsed_time, int iterations) const;
+  write_csv(const long int elapsed_time, int iterations, double cond_number) const;
 
   static std::string
   extractFileName(const std::string& filePath);

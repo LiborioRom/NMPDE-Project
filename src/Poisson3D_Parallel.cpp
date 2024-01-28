@@ -2,7 +2,7 @@
 
 
 void
-Poisson3DParallel::write_csv(const long int elapsed_time, int iterations) const{
+Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double cond_number) const{
     std::ofstream csv_file;
     csv_file.open("../results/results.csv", std::ios_base::app);
 
@@ -18,7 +18,8 @@ Poisson3DParallel::write_csv(const long int elapsed_time, int iterations) const{
              << elapsed_time<<","
              << iterations <<","
              << symmetric <<","
-             << mpi_size
+             << mpi_size <<","
+             << cond_number
              << std::endl;
     csv_file.close();
 
@@ -327,81 +328,60 @@ Poisson3DParallel::solve()
   // Trilinos linear algebra.
   SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
   SolverGMRES<TrilinosWrappers::MPI::Vector> GMRESsolver(solver_control);
-  calcularAutovalores(system_matrix);
   pcout << "  Solving the linear system" << std::endl;
   const auto t0 = std::chrono::high_resolution_clock::now();
+  double condition_number;
+
+  auto conditionNumberSlot = [&condition_number](double conditionNumber) {
+        // Your code to handle the condition number, e.g., print it
+        condition_number = conditionNumber;
+
+        return conditionNumber;
+  };
+
+  solver.connect_condition_number_slot(conditionNumberSlot, false);
+  GMRESsolver.connect_condition_number_slot(conditionNumberSlot, false);
 
     if (preconditioner_name == "identity")
     {
         std::cout<<"Using preconditioner identity"<<std::endl;
         TrilinosWrappers::PreconditionIdentity preconditioner;
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
-    }else if (preconditioner_name == "jacobi"){
-        std::cout<<"Using preconditioner jacobi"<<std::endl;
-        TrilinosWrappers::PreconditionJacobi preconditioner;
-        preconditioner.initialize(system_matrix);
-        solver.solve(system_matrix, solution, system_rhs, preconditioner);
-    }else if (preconditioner_name == "ssor"){
-        std::cout<<"Using preconditioner ssor"<<std::endl;
-        TrilinosWrappers::PreconditionSSOR preconditioner;
-        preconditioner.initialize(
-                system_matrix,
-                TrilinosWrappers::PreconditionSSOR::AdditionalData(1.0)
-        );
-        solver.solve(system_matrix, solution, system_rhs, preconditioner);
+    }else if (preconditioner_name == "jacobi") {
+    std::cout << "Using preconditioner Jacobi" << std::endl;
 
-    }else if (preconditioner_name == "sor"){
+    // Configuring parameters for the SOR preconditioner
+    TrilinosWrappers::PreconditionJacobi::AdditionalData jacobi_data;
 
-        std::cout<<"Using preconditioner sor"<<std::endl;
-        std::cout<<"Not symmetric preconditioner, hence solving with GMRES and not GC"<<std::endl;
-        TrilinosWrappers::PreconditionSOR preconditioner;
-        preconditioner.initialize(
-                system_matrix, TrilinosWrappers::PreconditionSOR::AdditionalData(1.0)
-        );
-        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-    }
-   else if (preconditioner_name == "ilu") {
-    std::cout << "Using preconditioner Incomplete LU (ILU)" << std::endl;
-
-    // Configuring parameters for the Incomplete LU (ILU) preconditioner
-    TrilinosWrappers::PreconditionILU::AdditionalData ilu_data;
-
-    // Set the fill level for the ILU preconditioner
     // Adjust this value based on the characteristics of your problem
-    ilu_data.ilu_fill = 1;
+    jacobi_data.omega = 1;// Example value, you may need to adjust it
+    jacobi_data.min_diagonal=0;
+    jacobi_data.n_sweeps=1;
 
-    // Create and initialize the Incomplete LU (ILU) preconditioner
-    TrilinosWrappers::PreconditionILU preconditioner;
-    preconditioner.initialize(system_matrix, ilu_data);
 
-    // Solve the linear system using GMRES and the Incomplete LU (ILU) preconditioner
-    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-}else if (preconditioner_name == "ilut") {
-    std::cout << "Using preconditioner Incomplete LU with Threshold (ILUT)" << std::endl;
+    TrilinosWrappers::PreconditionJacobi preconditioner;
+    preconditioner.initialize(system_matrix, jacobi_data);
 
-    // Configuring parameters for the Incomplete LU with Threshold (ILUT) preconditioner
-    TrilinosWrappers::PreconditionILUT::AdditionalData ilut_data;
 
-    // Set the drop threshold for the ILUT preconditioner
-    ilut_data.ilut_drop = 0.0; // Adjust this value based on the characteristics of your problem
+    solver.solve(system_matrix, solution, system_rhs, preconditioner);
+    }else if (preconditioner_name == "ssor") {
+    std::cout << "Using preconditioner SSOR" << std::endl;
 
-    // Set the level of additional fill-in elements for the ILUT preconditioner
-    ilut_data.ilut_fill = 1; // Adjust this value based on the characteristics of your problem
+    // Configuring parameters for the SOR preconditioner
+    TrilinosWrappers::PreconditionSSOR::AdditionalData ssor_data;
 
-    // Set the absolute perturbation for the ILUT preconditioner
-    ilut_data.ilut_atol = 0.0; // Adjust this value based on the characteristics of your problem
+    // Set the relaxation parameter for the SOR preconditioner
+    // Adjust this value based on the characteristics of your problem
+    ssor_data.omega = 1;// Example value, you may need to adjust it
+    ssor_data.min_diagonal=0.29;
+    ssor_data.overlap=10;
+    ssor_data.n_sweeps=40;
 
-    // Set the scaling factor for the diagonal of the matrix for the ILUT preconditioner
-    ilut_data.ilut_rtol = 1.0; // Adjust this value based on the characteristics of your problem
+    // Create and initialize the Successive Overrelaxation (SOR) preconditioner
+    TrilinosWrappers::PreconditionSSOR preconditioner;
+    preconditioner.initialize(system_matrix, ssor_data);
 
-    // Set the overlap for the ILUT preconditioner in parallel execution
-    ilut_data.overlap = 0; // Adjust this value based on the parallel setup of your problem
-
-    // Create and initialize the Incomplete LU with Threshold (ILUT) preconditioner
-    TrilinosWrappers::PreconditionILUT preconditioner;
-    preconditioner.initialize(system_matrix, ilut_data);
-
-    // Solve the linear system using GMRES and the Incomplete LU with Threshold (ILUT) preconditioner
+    // Solve the linear system using GMRES and the Successive Overrelaxation (SOR) preconditioner
     GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
 }else if (preconditioner_name == "amg") {
     std::cout << "Using Algebraic Multigrid (AMG) preconditioner" << std::endl;
@@ -428,23 +408,7 @@ Poisson3DParallel::solve()
 
     // Solve the linear system using GMRES and the AMG preconditioner
     GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-}else if (preconditioner_name == "blockwise_direct") {
-    std::cout << "Using Blockwise Direct preconditioner" << std::endl;
-
-    // Configuring parameters for the Blockwise Direct preconditioner
-    TrilinosWrappers::PreconditionBlockwiseDirect::AdditionalData blockwise_direct_data;
-
-    // Set parameters based on your problem characteristics
-    blockwise_direct_data.overlap = 0;  // Set the overlap of local matrix portions in parallel
-
-    // Create and initialize the Blockwise Direct preconditioner
-    TrilinosWrappers::PreconditionBlockwiseDirect preconditioner;
-    preconditioner.initialize(system_matrix, blockwise_direct_data);
-
-    // Solve the linear system using GMRES and the Blockwise Direct preconditioner
-    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-}
-else{
+}else{
         std::cerr<<"Error! Preconditioner not supported!"<<std::endl;
         std::exit(-1);
     }
@@ -457,9 +421,10 @@ else{
              << dt << " [ms] " << std::endl;
 
     pcout << "  " << solver_control.last_step() << "  iterations" << std::endl;
+    pcout << "Condition Number: " << condition_number << std::endl;
 
   if (mpi_rank == 0)
-      write_csv(dt, solver_control.last_step());
+      write_csv(dt, solver_control.last_step(), condition_number);
 
 }
 

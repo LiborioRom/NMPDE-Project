@@ -393,10 +393,10 @@ Poisson3DParallel::solve()
     amg_data.elliptic = true;  // Adjust based on the nature of your problem
     amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
     amg_data.n_cycles = 1;  // Number of multigrid cycles
-    amg_data.w_cycle = false;  // Use w-cycle if needed
-    amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
+    amg_data.w_cycle = true;  // Use w-cycle if needed
+    amg_data.aggregation_threshold = 1e-2;  // Threshold for coarsening
     amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
-    amg_data.smoother_sweeps = 2;  // Number of smoother sweeps
+    amg_data.smoother_sweeps = 20;  // Number of smoother sweeps
     amg_data.smoother_overlap = 0;  // Smoother overlap in parallel
     amg_data.output_details = false;  // Output internal details
     amg_data.smoother_type = "Chebyshev";  // Smoother type

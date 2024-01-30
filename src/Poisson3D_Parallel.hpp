@@ -279,8 +279,8 @@ protected:
   // Polynomial degree.
   unsigned int r; //Modified from const unsigned
 
-  int overlap = 10, sweeps = 10, cycles = 1;
-  double omega = 1;
+  int overlap = 10, sweeps = 1, cycles = 1;
+  double omega = 1.;
 
   /********END CUSTOM MEMBERS*******/
 

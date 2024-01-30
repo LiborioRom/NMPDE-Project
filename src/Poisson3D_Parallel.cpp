@@ -23,6 +23,7 @@ Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double
              << overlap << ","
              << sweeps<< ","
              << omega<< ","
+             << cycles
              << std::endl;
     csv_file.close();
 
@@ -358,7 +359,7 @@ Poisson3DParallel::solve()
   double condition_number;
 
   auto conditionNumberSlot = [&condition_number](double conditionNumber) {
-        // Your code to handle the condition number, e.g., print it
+
         condition_number = conditionNumber;
 
         return conditionNumber;
@@ -372,69 +373,69 @@ Poisson3DParallel::solve()
         pcout<<"Using preconditioner identity"<<std::endl;
         TrilinosWrappers::PreconditionIdentity preconditioner;
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
+
     }else if (preconditioner_name == "jacobi") {
-    pcout << "Using preconditioner Jacobi" << std::endl;
+        pcout << "Using preconditioner Jacobi" << std::endl;
 
-    // Configuring parameters for the SOR preconditioner
-    TrilinosWrappers::PreconditionJacobi::AdditionalData jacobi_data;
-
-    // Adjust this value based on the characteristics of your problem
-    jacobi_data.omega = omega;// Example value, you may need to adjust it
-    jacobi_data.min_diagonal=0;
-    jacobi_data.n_sweeps=sweeps;
+        // Configuring parameters for the SOR preconditioner
+        TrilinosWrappers::PreconditionJacobi::AdditionalData jacobi_data;
 
 
-    TrilinosWrappers::PreconditionJacobi preconditioner;
-    preconditioner.initialize(system_matrix, jacobi_data);
+        jacobi_data.omega = omega;
+        jacobi_data.min_diagonal=0;
+        jacobi_data.n_sweeps=sweeps;
 
 
-    solver.solve(system_matrix, solution, system_rhs, preconditioner);
+        TrilinosWrappers::PreconditionJacobi preconditioner;
+        preconditioner.initialize(system_matrix, jacobi_data);
+
+
+        solver.solve(system_matrix, solution, system_rhs, preconditioner);
     }else if (preconditioner_name == "ssor") {
-    pcout << "Using preconditioner SSOR" << std::endl;
+        pcout << "Using preconditioner SSOR" << std::endl;
 
-    // Configuring parameters for the SOR preconditioner
-    TrilinosWrappers::PreconditionSSOR::AdditionalData ssor_data;
+        // Configuring parameters for the SOR preconditioner
+        TrilinosWrappers::PreconditionSSOR::AdditionalData ssor_data;
 
-    // Set the relaxation parameter for the SOR preconditioner
-    // Adjust this value based on the characteristics of your problem
-    ssor_data.omega = omega;// Example value, you may need to adjust it
-    ssor_data.min_diagonal=0.29;
-    ssor_data.overlap=overlap;
-    ssor_data.n_sweeps=sweeps;
 
-    // Create and initialize the Successive Overrelaxation (SOR) preconditioner
-    TrilinosWrappers::PreconditionSSOR preconditioner;
-    preconditioner.initialize(system_matrix, ssor_data);
+        ssor_data.omega = omega;
+        ssor_data.min_diagonal=0.29;
+        ssor_data.overlap=overlap;
+        ssor_data.n_sweeps=sweeps;
 
-    // Solve the linear system using GMRES and the Successive Overrelaxation (SOR) preconditioner
-    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-}else if (preconditioner_name == "amg") {
-    pcout << "Using Algebraic Multigrid (AMG) preconditioner" << std::endl;
+        // Create and initialize the Successive Overrelaxation (SOR) preconditioner
+        TrilinosWrappers::PreconditionSSOR preconditioner;
+        preconditioner.initialize(system_matrix, ssor_data);
 
-    // Configuring parameters for the AMG preconditioner
-    TrilinosWrappers::PreconditionAMG::AdditionalData amg_data;
+        // Solve the linear system using GMRES and the Successive Overrelaxation (SOR) preconditioner
+        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+    }else if (preconditioner_name == "amg") {
+        pcout << "Using Algebraic Multigrid (AMG) preconditioner" << std::endl;
 
-    // Set parameters based on your problem characteristics
-    amg_data.elliptic = true;  // Adjust based on the nature of your problem
-    amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
-    amg_data.n_cycles = cycles;  // Number of multigrid cycles
-    amg_data.w_cycle = false;  // Use w-cycle if needed
-    amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
-    amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
-    amg_data.smoother_sweeps = sweeps;  // Number of smoother sweeps
-    amg_data.smoother_overlap = 0;  // Smoother overlap in parallel
-    amg_data.output_details = false;  // Output internal details
-    amg_data.smoother_type = "Chebyshev";  // Smoother type
-    amg_data.coarse_type = "Amesos-KLU";  // Coarsest level solver type
+        // Configuring parameters for the AMG preconditioner
+        TrilinosWrappers::PreconditionAMG::AdditionalData amg_data;
 
-    // Create and initialize the Algebraic Multigrid (AMG) preconditioner
-    TrilinosWrappers::PreconditionAMG preconditioner;
-    preconditioner.initialize(system_matrix, amg_data);
+        // Set parameters based on your problem characteristics
+        amg_data.elliptic = true;  // Adjust based on the nature of your problem
+        amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
+        amg_data.n_cycles = cycles;  // Number of multigrid cycles
+        amg_data.w_cycle = false;  // Use w-cycle if needed
+        amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
+        amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
+        amg_data.smoother_sweeps = sweeps;  // Number of smoother sweeps
+        amg_data.smoother_overlap = 0;  // Smoother overlap in parallel
+        amg_data.output_details = false;  // Output internal details
+        amg_data.smoother_type = "Chebyshev";  // Smoother type
+        amg_data.coarse_type = "Amesos-KLU";  // Coarsest level solver type
 
-    // Solve the linear system using GMRES and the AMG preconditioner
-    GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-}else{
-        std::cerr<<"Error! Preconditioner \" " <<preconditioner_name <<" \" not supported!"<<std::endl;
+        // Create and initialize the Algebraic Multigrid (AMG) preconditioner
+        TrilinosWrappers::PreconditionAMG preconditioner;
+        preconditioner.initialize(system_matrix, amg_data);
+
+        // Solve the linear system using GMRES and the AMG preconditioner
+        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+    }else{
+        pcout<<"Error! Preconditioner \" " <<preconditioner_name <<" \" not supported!"<<std::endl;
         std::exit(-1);
     }
 

@@ -3,7 +3,7 @@ from pandasql import sqldf
 import pandas as pd
 
 results = pd.read_csv("../results/results.csv")
-
+results = results.dropna()
 
 # noinspection SqlNoDataSourceInspection,SqlDialectInspection
 queried_data = sqldf('''

@@ -1,8 +1,9 @@
 #!/bin/bash
 
 
-PRECONDITIONERS=("identity" "jacobi" "ssor" "amg") # add to the vector new preconditioners
-MESH="mesh-cube-20.msh"
+PRECONDITIONERS=("identity" "ssor" ) # add to the vector new preconditioners
+
+MESH="mesh-cube-40.msh"
 
 for PRECONDITIONER in "${PRECONDITIONERS[@]}"
 do
@@ -10,10 +11,10 @@ do
   do
     for ((c=1; c<=1; c++))
     do
-      pwd
-      ../build/Project_parallel -m "$MESH"  -P "$PRECONDITIONER" -p "$P_VALUE"
+      mpiexec -n 4 ../build/Project_parallel -m "$MESH"  -P "$PRECONDITIONER" -p "$P_VALUE"
     done
   done
 done
 
-python3 cond_number_vs_p_value.py
+# python3 cond_number_vs_p_value.py
+# python3 iterations_vs_p_value.py

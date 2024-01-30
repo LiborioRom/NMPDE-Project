@@ -336,7 +336,7 @@ Poisson3DParallel::solve()
 
   auto conditionNumberSlot = [&condition_number, this](double conditionNumber) -> double {
       // Your code to handle the condition number, e.g., print it
-      pcout << "Check Condition Number: " << conditionNumber << std::endl;
+      //pcout << "Check Condition Number: " << conditionNumber << std::endl;
       condition_number = conditionNumber;
 
      return conditionNumber;
@@ -414,7 +414,7 @@ Poisson3DParallel::solve()
         TrilinosWrappers::PreconditionAMG::size_type memoryUsage = preconditioner.memory_consumption();
 
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
-        std::cout << "Memory Consumption: " << memoryUsage << " bytes" << std::endl;
+        pcout << "Memory Consumption: " << memoryUsage << " bytes" << std::endl;
 
     }else if (preconditioner_name == "ilut") {
 
@@ -471,7 +471,7 @@ Poisson3DParallel::solve()
              << dt << " [ms] " << std::endl;
 
     pcout << "  " << solver_control.last_step() << "  iterations" << std::endl;
-    std::cout << "Condition Number: " << condition_number << std::endl;
+    pcout << "Condition Number: " << condition_number << std::endl;
 
   if (mpi_rank == 0)
       write_csv(dt, solver_control.last_step(),condition_number);

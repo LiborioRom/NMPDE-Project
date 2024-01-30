@@ -84,6 +84,8 @@ public:
       std::vector<Sphere> spheres;
       double p_value;
 
+
+
       bool is_point_inside_sphere(const Point<dim>& point, const Sphere& sphere) const
       {
           double distance_squared = 0.0;
@@ -276,6 +278,9 @@ protected:
 
   // Polynomial degree.
   unsigned int r; //Modified from const unsigned
+
+  int overlap = 10, sweeps = 10, cycles = 1;
+  double omega = 1;
 
   /********END CUSTOM MEMBERS*******/
 

@@ -19,7 +19,10 @@ Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double
              << iterations <<","
              << p_or_c <<","
              << mpi_size <<","
-             << cond_number
+             << cond_number <<","
+             << overlap << ","
+             << sweeps<< ","
+             << omega<< ","
              << std::endl;
     csv_file.close();
 
@@ -57,12 +60,13 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
     std::string user_choice_for_coefficient_symmetry;
 
 
+
     /*
      * MANAGING COMMAND LINE FLAGS
      */
 
     int opt;
-    const char *options = "hp:m:r:P:s:";
+    const char *options = "hp:m:r:P:s:o:e:w:c:";
 
     while ((opt = getopt(argc, argv, options))!=-1){
         switch (opt) {
@@ -100,6 +104,27 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
                     pcout<<"Initializing a symmetric diffusion coefficient for a paralepiped"<< std::endl;
 
                 break;
+
+            case 'o':
+                overlap = std::stoi(optarg);
+                pcout<<"Setting overlap = "<<overlap<<std::endl;
+                break;
+
+            case 'e':
+                sweeps = std::stoi(optarg);
+                pcout<<"Setting sweeps = "<<sweeps<<std::endl;
+                break;
+
+            case 'w':
+                omega = std::stod(optarg);
+                pcout<<"Setting omega = " << omega << std::endl;
+                break;
+
+            case 'c':
+                cycles = std::stoi(optarg);
+                pcout<<"Setting n_cycles = " << cycles <<std::endl;
+                break;
+
             case '?':
                 std::cerr << "Unknown command line option\n";
                 return;
@@ -344,19 +369,19 @@ Poisson3DParallel::solve()
 
     if (preconditioner_name == "identity")
     {
-        std::cout<<"Using preconditioner identity"<<std::endl;
+        pcout<<"Using preconditioner identity"<<std::endl;
         TrilinosWrappers::PreconditionIdentity preconditioner;
         solver.solve(system_matrix, solution, system_rhs, preconditioner);
     }else if (preconditioner_name == "jacobi") {
-    std::cout << "Using preconditioner Jacobi" << std::endl;
+    pcout << "Using preconditioner Jacobi" << std::endl;
 
     // Configuring parameters for the SOR preconditioner
     TrilinosWrappers::PreconditionJacobi::AdditionalData jacobi_data;
 
     // Adjust this value based on the characteristics of your problem
-    jacobi_data.omega = 1;// Example value, you may need to adjust it
+    jacobi_data.omega = omega;// Example value, you may need to adjust it
     jacobi_data.min_diagonal=0;
-    jacobi_data.n_sweeps=1;
+    jacobi_data.n_sweeps=sweeps;
 
 
     TrilinosWrappers::PreconditionJacobi preconditioner;
@@ -365,17 +390,17 @@ Poisson3DParallel::solve()
 
     solver.solve(system_matrix, solution, system_rhs, preconditioner);
     }else if (preconditioner_name == "ssor") {
-    std::cout << "Using preconditioner SSOR" << std::endl;
+    pcout << "Using preconditioner SSOR" << std::endl;
 
     // Configuring parameters for the SOR preconditioner
     TrilinosWrappers::PreconditionSSOR::AdditionalData ssor_data;
 
     // Set the relaxation parameter for the SOR preconditioner
     // Adjust this value based on the characteristics of your problem
-    ssor_data.omega = 1;// Example value, you may need to adjust it
+    ssor_data.omega = omega;// Example value, you may need to adjust it
     ssor_data.min_diagonal=0.29;
-    ssor_data.overlap=10;
-    ssor_data.n_sweeps=40;
+    ssor_data.overlap=overlap;
+    ssor_data.n_sweeps=sweeps;
 
     // Create and initialize the Successive Overrelaxation (SOR) preconditioner
     TrilinosWrappers::PreconditionSSOR preconditioner;
@@ -384,7 +409,7 @@ Poisson3DParallel::solve()
     // Solve the linear system using GMRES and the Successive Overrelaxation (SOR) preconditioner
     GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
 }else if (preconditioner_name == "amg") {
-    std::cout << "Using Algebraic Multigrid (AMG) preconditioner" << std::endl;
+    pcout << "Using Algebraic Multigrid (AMG) preconditioner" << std::endl;
 
     // Configuring parameters for the AMG preconditioner
     TrilinosWrappers::PreconditionAMG::AdditionalData amg_data;
@@ -392,11 +417,11 @@ Poisson3DParallel::solve()
     // Set parameters based on your problem characteristics
     amg_data.elliptic = true;  // Adjust based on the nature of your problem
     amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
-    amg_data.n_cycles = 1;  // Number of multigrid cycles
+    amg_data.n_cycles = cycles;  // Number of multigrid cycles
     amg_data.w_cycle = false;  // Use w-cycle if needed
     amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
     amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
-    amg_data.smoother_sweeps = 2;  // Number of smoother sweeps
+    amg_data.smoother_sweeps = sweeps;  // Number of smoother sweeps
     amg_data.smoother_overlap = 0;  // Smoother overlap in parallel
     amg_data.output_details = false;  // Output internal details
     amg_data.smoother_type = "Chebyshev";  // Smoother type
@@ -409,7 +434,7 @@ Poisson3DParallel::solve()
     // Solve the linear system using GMRES and the AMG preconditioner
     GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
 }else{
-        std::cerr<<"Error! Preconditioner not supported!"<<std::endl;
+        std::cerr<<"Error! Preconditioner \" " <<preconditioner_name <<" \" not supported!"<<std::endl;
         std::exit(-1);
     }
 

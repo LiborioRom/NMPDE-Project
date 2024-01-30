@@ -14,9 +14,9 @@ results = results.dropna()
 queried_data = sqldf('''
 SELECT p_value, MIN(elapsed_time) as MinTime, sweeps
 FROM results
-WHERE mesh = 'mesh-cube-20' AND preconditioner = 'amg'
-GROUP BY p_value
-ORDER BY MinTime
+WHERE mesh = 'mesh-cube-20' AND preconditioner = 'amg' AND p_value < 8 
+GROUP BY p_value, sweeps
+ORDER BY p_value
 '''
                      )
 
@@ -24,12 +24,10 @@ print(queried_data)
 
 plt.figure()
 for sweep in queried_data['sweeps'].unique():
-
-    plt.plot(queried_data['p_value'], queried_data['MinTime'], label=f'sweep = {sweep}')
+    plt.plot(queried_data[queried_data["sweeps"] == sweep]['p_value'], queried_data[queried_data["sweeps"] == sweep]['MinTime'], label=f'sweep = {sweep}')
 
 plt.xlabel('p')
 plt.ylabel('time [ms]')
-plt.yscale('log')
 plt.title('Execution time in ms vs sphere exponent for different preconditioners')
 plt.grid()
 plt.legend()

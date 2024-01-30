@@ -39,6 +39,16 @@ main(int argc, char * argv[])
 mpiexec -n 4 ./Project_parallel -p 4 -P amg -r 2 -m mesh-cube-40.msh -s 0
 ./Project -p 4 -P amg -r 2 -m mesh-cube-40.msh -s 0
 
+mpiexec -n 4 ./Project_parallel -p 4 -P identity -r 2 -m mesh-cube-40.msh -s 0
+
+cond number :
+
+mpiexec -n 4 ./Project_parallel -p 4 -P identity -r 2 -m mesh-cube-40.msh -s 0
+
+first cond number :
+second cond number :
+
+
 -p : set p value (10^p)
 -P : set preconditionner
 -r : set degree

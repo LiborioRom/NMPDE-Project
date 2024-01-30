@@ -205,6 +205,7 @@ public:
       // Initialize the diffusion coefficient
       diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
   };
+    
   // Initialization.
   void
   setup();

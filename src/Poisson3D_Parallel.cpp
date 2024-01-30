@@ -334,12 +334,12 @@ Poisson3DParallel::solve()
 
   double condition_number = 0;
 
-  auto conditionNumberSlot = [&condition_number](double conditionNumber) -> double {
+  auto conditionNumberSlot = [&condition_number, this](double conditionNumber) -> double {
       // Your code to handle the condition number, e.g., print it
- 
+      pcout << "Check Condition Number: " << conditionNumber << std::endl;
       condition_number = conditionNumber;
 
-      return conditionNumber;
+     return conditionNumber;
   };
 
   solver.connect_condition_number_slot(conditionNumberSlot, false);
@@ -411,9 +411,11 @@ Poisson3DParallel::solve()
 
         preconditioner.initialize(system_matrix);
         
-        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+        TrilinosWrappers::PreconditionAMG::size_type memoryUsage = preconditioner.memory_consumption();
 
-  
+        GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+        std::cout << "Memory Consumption: " << memoryUsage << " bytes" << std::endl;
+
     }else if (preconditioner_name == "ilut") {
 
         pcout << "Using preconditioner Incomplete LU with Threshold (ILUT)" << std::endl;
@@ -469,7 +471,7 @@ Poisson3DParallel::solve()
              << dt << " [ms] " << std::endl;
 
     pcout << "  " << solver_control.last_step() << "  iterations" << std::endl;
-    pcout << "Condition Number: " << condition_number << std::endl;
+    std::cout << "Condition Number: " << condition_number << std::endl;
 
   if (mpi_rank == 0)
       write_csv(dt, solver_control.last_step(),condition_number);

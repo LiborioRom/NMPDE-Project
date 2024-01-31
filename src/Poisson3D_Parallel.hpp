@@ -177,10 +177,10 @@ public:
         diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
     };
 
-  void initialize_diffusion_coefficient_symmetric(double p_value) {
+  void initialize_diffusion_coefficient_symmetric(double p_value, int n_spheres) {
         // Create a vector of spheres
         std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
-        int n=2;
+        int n=n_spheres;
         // Define symmetrically distributed centers
         double step = 1.0 / (n+1);  // 'n' is the number of steps to divide each dimension
         double radius = 0.05;       // Fixed radius for each sphere
@@ -199,10 +199,10 @@ public:
       // Initialize the diffusion coefficient
       diffusion_coefficient = DiffusionCoefficient<dim>(spheres, p_value);
   };
-  void initialize_diffusion_coefficient_symmetric_paralepiped(double p_value) {
+  void initialize_diffusion_coefficient_symmetric_paralepiped(double p_value, int n_spheres) {
     // Create a vector of spheres
     std::vector<DiffusionCoefficient<dim>::Sphere> spheres;
-    int n = 2; // Number of divisions along each axis
+    int n = n_spheres; // Number of divisions along each axis
 
     // Dimensions of the parallelepiped
     double x_length = 2.0; // Length along x-axis
@@ -279,7 +279,7 @@ protected:
   // Polynomial degree.
   unsigned int r; //Modified from const unsigned
 
-  int overlap = 10, sweeps = 1, cycles = 1;
+  int overlap = 10, sweeps = 1, n_spheres = 2;
   double omega = 1.;
 
   /********END CUSTOM MEMBERS*******/

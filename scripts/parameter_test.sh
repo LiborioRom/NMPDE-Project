@@ -2,7 +2,7 @@
 
 
 SWEEPS=("1" "5" "10" "15" "20")
-PRECONDITIONER="amg" # add to the vector new preconditioners
+PRECONDITIONER="ssor" # add to the vector new preconditioners
 MESH="mesh-cube-20.msh"
 
 
@@ -12,7 +12,7 @@ do
   do
     for ((c=1; c<=1; c++))
     do
-      mpiexec -n 4 ../build/Project_parallel -m "$MESH" -P "$PRECONDITIONER" -p "$P_VALUE" -e "$SWEEP"
+      mpiexec -n 4 ../build/Project_parallel -m "$MESH" -P "$PRECONDITIONER" -p "$P_VALUE" -o "$SWEEP"
     done
   done
 done

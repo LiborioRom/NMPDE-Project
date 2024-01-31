@@ -23,7 +23,7 @@ Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double
              << overlap << ","
              << sweeps<< ","
              << omega<< ","
-             << cycles
+             << n_spheres
              << std::endl;
     csv_file.close();
 
@@ -67,7 +67,7 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
      */
 
     int opt;
-    const char *options = "hp:m:r:P:s:o:e:w:c:";
+    const char *options = "hp:m:r:P:s:o:e:w:n:";
 
     while ((opt = getopt(argc, argv, options))!=-1){
         switch (opt) {
@@ -121,9 +121,9 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
                 pcout<<"Setting omega = " << omega << std::endl;
                 break;
 
-            case 'c':
-                cycles = std::stoi(optarg);
-                pcout<<"Setting n_cycles = " << cycles <<std::endl;
+            case 'n':
+                n_spheres = std::stoi(optarg);
+                pcout<<"Setting n_shperes = " << n_spheres  <<"^3" <<std::endl;
                 break;
 
             case '?':
@@ -137,12 +137,12 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
 
     }
 
-    mesh_file_name = "../mesh/" + mesh_name_no_path;
+    mesh_file_name = "../mesh/input_mesh/" + mesh_name_no_path;
 
     if(p_or_c=="cube")
-        initialize_diffusion_coefficient_symmetric(p_value);
+        initialize_diffusion_coefficient_symmetric(p_value, n_spheres);
     else
-        initialize_diffusion_coefficient_symmetric_paralepiped(p_value);
+        initialize_diffusion_coefficient_symmetric_paralepiped(p_value, n_spheres);
 
 }
 
@@ -418,7 +418,7 @@ Poisson3DParallel::solve()
         // Set parameters based on your problem characteristics
         amg_data.elliptic = true;  // Adjust based on the nature of your problem
         amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
-        amg_data.n_cycles = cycles;  // Number of multigrid cycles
+        amg_data.n_cycles = 1;  // Number of multigrid cycles
         amg_data.w_cycle = false;  // Use w-cycle if needed
         amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
         amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
@@ -487,7 +487,7 @@ Poisson3DParallel::output() const
   data_out.build_patches();
 
   const std::filesystem::path mesh_path(mesh_file_name);
-  const std::string output_file_name = "output-" + mesh_path.stem().string();
+  const std::string output_file_name = "../mesh/output_mesh/output-" + mesh_path.stem().string();
 
   // Finally, we need to write in a format that supports parallel output. This
   // can be achieved in multiple ways (e.g. XDMF/H5). We choose VTU/PVTU files,

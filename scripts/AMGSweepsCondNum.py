@@ -29,7 +29,7 @@ for sweep in queried_data['sweeps'].unique():
 plt.xlabel('p')
 plt.ylabel('condition number')
 plt.yscale('log')
-plt.title('Execution time in ms vs sphere exponent for different preconditioners')
+plt.title('p_value vs condition number')
 plt.grid()
 plt.legend()
 plt.savefig('../results/plot/AMGsweepCondNum')

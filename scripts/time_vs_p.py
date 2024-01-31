@@ -9,7 +9,7 @@ results = results.dropna()
 queried_data = sqldf('''
 SELECT mesh, p_value, preconditioner, MIN(elapsed_time) as MinTime
 FROM results
-WHERE mesh = 'mesh-cube-20'
+WHERE mesh = 'mesh-cube-20' 
 GROUP BY preconditioner, p_value
 ORDER BY preconditioner
 '''

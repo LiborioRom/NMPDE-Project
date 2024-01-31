@@ -3,35 +3,50 @@
 
 void
 Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double cond_number) const{
-    std::ofstream csv_file;
-    csv_file.open("../results/results.csv", std::ios_base::app);
 
-    if (!csv_file.is_open()) {
-        std::cerr<<"Error! Cannot open csv file! ";
-        return ;
+    /*
+     * We use this function to write result to the csv file.
+     */
+    if (mpi_rank == 0)
+    {
+        std::ofstream csv_file;
+        csv_file.open("../results/results.csv", std::ios_base::app);
+
+        if (!csv_file.is_open()) {
+            std::cerr<<"Error! Cannot open csv file! ";
+            return ;
+        }
+
+        csv_file << extractFileName(mesh_file_name) << ","
+                 << p_value <<","
+                 << r <<","
+                 << preconditioner_name << ","
+                 << elapsed_time<<","
+                 << iterations <<","
+                 << p_or_c <<","
+                 << mpi_size <<","
+                 << cond_number <<","
+                 << overlap << ","
+                 << sweeps<< ","
+                 << omega<< ","
+                 << n_spheres
+                 << std::endl;
+        csv_file.close();
+
+        std::cout<< "CSV write successful."<<std::endl;
+
+    }else{
+        pcout << "Cannot use write_csv function in global scope"<<std::endl;
     }
 
-    csv_file << extractFileName(mesh_file_name) << ","
-             << p_value <<","
-             << r <<","
-             << preconditioner_name << ","
-             << elapsed_time<<","
-             << iterations <<","
-             << p_or_c <<","
-             << mpi_size <<","
-             << cond_number <<","
-             << overlap << ","
-             << sweeps<< ","
-             << omega<< ","
-             << n_spheres
-             << std::endl;
-    csv_file.close();
-
-    pcout<< "CSV write successful."<<std::endl;
 }
 
 std::string
 Poisson3DParallel::extractFileName(const std::string& filePath) {
+
+    /*
+     * This function is only needed to write the mesh filename into the csv without its path.
+     */
 
     size_t lastSlash = filePath.find_last_of("/\\");
 
@@ -50,8 +65,14 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
 
 
     /*
-     * DEFAULT INITIALIZATIONS OF PARAMETERS
+     * In order to efficiently test different preconditioners and their parameters we needed a way to modify their values
+     * without recompiling the source files. We decided to define those values at runtime and pass them to the compiled
+     * program using command line flags.
+     * This function reads the given values at runtime and store its value accordingly in the class.
+     * To read command line values we use the c function: getopt()
      */
+
+    //We first default initialize the parameters
 
     std::string mesh_name_no_path = "mesh-cube-20.msh";
     preconditioner_name = "identity";
@@ -60,11 +81,7 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
     p_or_c = "cube";
     std::string user_choice_for_coefficient_symmetry;
 
-
-
-    /*
-     * MANAGING COMMAND LINE FLAGS
-     */
+    // We modify the values
 
     int opt;
     const char *options = "hp:m:r:P:s:o:e:w:n:";
@@ -72,7 +89,7 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
     while ((opt = getopt(argc, argv, options))!=-1){
         switch (opt) {
             case 'h':
-                pcout << "Help message "<<std::endl;
+                pcout << "For help see help.txt file "<<std::endl;
                 break;
 
             case 'p':
@@ -345,6 +362,17 @@ Poisson3DParallel::assemble()
 void
 Poisson3DParallel::solve()
 {
+    /*
+     * In order to choose at runtime the preconditoner we added in the solve method
+     * a big if-else statement that solves the system matrix as requested by the user.
+     * We initialize two instances of solver methods: one for symmetric precondtioners (SolverGC),
+     * and one for unsymmetric one (solverGMRES) . Both of this solver have a method called
+     * connect_condition_number_slot(). It allows to retrieve the condition number of the system matrix, once
+     * the FEM linear system has been solved.
+     */
+
+
+
   pcout << "===============================================" << std::endl;
 
   SolverControl solver_control(10000, 1e-6 * system_rhs.l2_norm());
@@ -355,18 +383,37 @@ Poisson3DParallel::solve()
   SolverCG<TrilinosWrappers::MPI::Vector> solver(solver_control);
   SolverGMRES<TrilinosWrappers::MPI::Vector> GMRESsolver(solver_control);
   pcout << "  Solving the linear system" << std::endl;
-  const auto t0 = std::chrono::high_resolution_clock::now();
-  double condition_number;
 
-  auto conditionNumberSlot = [&condition_number](double conditionNumber) {
+
+
+
+  double condition_number;
+    /*
+   * In order to compute the condition number of the system matrix we used the solvers' method
+   */
+
+    auto conditionNumberSlot = [&condition_number](double conditionNumber) {
 
         condition_number = conditionNumber;
 
         return conditionNumber;
-  };
+    };
 
-  solver.connect_condition_number_slot(conditionNumberSlot, false);
-  GMRESsolver.connect_condition_number_slot(conditionNumberSlot, false);
+    solver.connect_condition_number_slot(conditionNumberSlot, false);
+    GMRESsolver.connect_condition_number_slot(conditionNumberSlot, false);
+
+
+
+  /*
+   * We start sampling the time. The big if-else loop for sure increments execution time due to the branch hazards it
+   * introduces. However, in our analysis we want to study not the execution time per-se but the trend of the execution
+   * time as the number of processes increases. Therefore, we believe we can safely ignore this overhead.
+   */
+
+
+
+  const auto t0 = std::chrono::high_resolution_clock::now();
+
 
     if (preconditioner_name == "identity")
     {
@@ -443,6 +490,7 @@ Poisson3DParallel::solve()
 
 
     const auto dt = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0).count();
+
     pcout<<"Elapsed time for solve phase: "
              << dt << " [ms] " << std::endl;
 

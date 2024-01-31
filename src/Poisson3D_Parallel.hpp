@@ -38,7 +38,7 @@
 #include <cmath> // For pow and sqrt functions
 #include <random>
 
-#include <Eigen/Dense>
+
 using namespace dealii;
 
 /**
@@ -56,7 +56,11 @@ public:
   class DiffusionCoefficient : public Function<dim>
   {
   public:
-      // Define a structure to hold sphere data
+
+      /*
+       * The following is a struct we defined to represent a sphere.
+       */
+
       struct Sphere
       {
           Point<dim> center;
@@ -81,6 +85,9 @@ public:
       }
 
   private:
+      /*
+       * We store spheres in a std::vector
+       */
       std::vector<Sphere> spheres;
       double p_value;
 
@@ -250,17 +257,13 @@ public:
   output() const;
 
   /*
-   * CUSTOM PUBLIC MEMBERS (SOME CAN BE MADE PROTECTED)
+   * CUSTOM PUBLIC MEMBERS
    */
 
   void
   manage_flags(int argc, char ** argv);
 
-  void
-  write_csv(const long int elapsed_time, int iterations, double cond_number) const;
 
-  static std::string
-  extractFileName(const std::string& filePath);
 
 protected:
   // Path to the mesh file.
@@ -269,6 +272,13 @@ protected:
   /*
    * CUSTOM PROTECTED MEMBERS
    */
+
+
+  void
+  write_csv(const long int elapsed_time, int iterations, double cond_number) const;
+
+  static std::string
+  extractFileName(const std::string& filePath);
 
   std::string preconditioner_name;
 

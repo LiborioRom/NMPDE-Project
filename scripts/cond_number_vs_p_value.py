@@ -4,7 +4,6 @@ import pandas as pd
 
 
 results = pd.read_csv("../results/results.csv")
-
 results = results.dropna()
 
 

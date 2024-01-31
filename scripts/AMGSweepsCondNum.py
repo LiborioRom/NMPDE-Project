@@ -5,10 +5,6 @@ import pandas as pd
 results = pd.read_csv("../results/results.csv")
 results = results.dropna()
 
-# jacobi_data.omega = omega; int
-# jacobi_data.min_diagonal=0;
-# jacobi_data.n_sweeps=sweeps; double
-
 
 # noinspection SqlNoDataSourceInspection,SqlDialectInspection
 queried_data = sqldf('''
@@ -24,13 +20,41 @@ print(queried_data)
 
 plt.figure()
 for sweep in queried_data['sweeps'].unique():
-    plt.plot(queried_data[queried_data["sweeps"] == sweep]['p_value'], queried_data[queried_data["sweeps"] == sweep]['MinTime'], label=f'sweep = {sweep}')
+    subset = queried_data[queried_data["sweeps"] == sweep]
+    plt.plot(subset['p_value'], subset['MinTime'], label=f'sweep = {sweep}')
 
 plt.xlabel('p')
 plt.ylabel('condition number')
 plt.yscale('log')
-plt.title('p_value vs condition number')
+plt.title('AMG p_value vs condition number with different sweep value')
 plt.grid()
 plt.legend()
-plt.savefig('../results/plot/AMGsweepCondNum')
+plt.savefig('../results/plot/AMGsweepCond7')
+plt.close()
+
+######################Plotting for P=8####################################
+
+# noinspection SqlNoDataSourceInspection,SqlDialectInspection
+queried_data = sqldf('''
+SELECT p_value, MIN(cond_number) as MinTime, sweeps
+FROM results
+WHERE mesh = 'mesh-cube-20' AND preconditioner = 'amg' 
+GROUP BY p_value, sweeps
+ORDER BY p_value
+'''
+                     )
+
+
+plt.figure()
+for sweep in queried_data['sweeps'].unique():
+    subset = queried_data[queried_data["sweeps"] == sweep]
+    plt.plot(subset['p_value'], subset['MinTime'], label=f'sweep = {sweep}')
+
+plt.xlabel('p')
+plt.ylabel('condition number')
+plt.yscale('log')
+plt.title('AMG p_value vs condition number with different sweep value')
+plt.grid()
+plt.legend()
+plt.savefig('../results/plot/AMGsweepCond8')
 plt.close()

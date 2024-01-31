@@ -19,7 +19,7 @@ queried_data = sqldf('''
 plt.figure()
 for preconditioner in queried_data['preconditioner'].unique():
     subset = queried_data[queried_data["preconditioner"] == preconditioner]
-    plt.plot(subset['spheres'], subset['CN'], label=preconditioner)
+    plt.plot(subset['spheres']**3, subset['CN'], label=preconditioner)
 
 plt.xlabel('Number of spheres')
 plt.ylabel('Condition number')
@@ -27,5 +27,5 @@ plt.yscale('log')  # Adjust the scale if needed
 plt.title('Number of sphere vs condition number')
 plt.grid()
 plt.legend()
-plt.savefig('../results/plot/iterations_vs_r')
+plt.savefig('../results/plot/cond_vs_spheres')
 plt.close()

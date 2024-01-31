@@ -10,7 +10,7 @@ Poisson3DParallel::write_csv(const long int elapsed_time, int iterations, double
     if (mpi_rank == 0)
     {
         std::ofstream csv_file;
-        csv_file.open("../results/results.csv", std::ios_base::app);
+        csv_file.open("/u/par1/NMPDE-Project/results.csv", std::ios_base::app);
 
         if (!csv_file.is_open()) {
             std::cerr<<"Error! Cannot open csv file! ";
@@ -154,7 +154,7 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
 
     }
 
-    mesh_file_name = "../mesh/input_mesh/" + mesh_name_no_path;
+    mesh_file_name = "/u/par1/NMPDE-Project/mesh/input_mesh/" + mesh_name_no_path;
 
     if(p_or_c=="cube")
         initialize_diffusion_coefficient_symmetric(p_value, n_spheres);
@@ -535,7 +535,7 @@ Poisson3DParallel::output() const
   data_out.build_patches();
 
   const std::filesystem::path mesh_path(mesh_file_name);
-  const std::string output_file_name = "../mesh/output_mesh/output-" + mesh_path.stem().string();
+  const std::string output_file_name = "/u/par1/NMPDE-Project/mesh/output_mesh/output-" + mesh_path.stem().string();
 
   // Finally, we need to write in a format that supports parallel output. This
   // can be achieved in multiple ways (e.g. XDMF/H5). We choose VTU/PVTU files,

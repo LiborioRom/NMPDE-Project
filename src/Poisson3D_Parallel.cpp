@@ -138,6 +138,7 @@ Poisson3DParallel::manage_flags(int argc, char **argv) {
     }
 
     mesh_file_name = "../mesh/" + mesh_name_no_path;
+    
 
     if(p_or_c=="cube")
         initialize_diffusion_coefficient_symmetric(p_value);
@@ -419,8 +420,8 @@ Poisson3DParallel::solve()
         amg_data.elliptic = true;  // Adjust based on the nature of your problem
         amg_data.higher_order_elements = false;  // Adjust if using higher-order elements
         amg_data.n_cycles = cycles;  // Number of multigrid cycles
-        amg_data.w_cycle = false;  // Use w-cycle if needed
-        amg_data.aggregation_threshold = 1e-4;  // Threshold for coarsening
+        amg_data.w_cycle = true;  // Use w-cycle if needed
+        amg_data.aggregation_threshold = 1e-2;  // Threshold for coarsening
         amg_data.constant_modes = std::vector<std::vector<bool>>(0);  // Constant modes for null space
         amg_data.smoother_sweeps = sweeps;  // Number of smoother sweeps
         amg_data.smoother_overlap = 0;  // Smoother overlap in parallel

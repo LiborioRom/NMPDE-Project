@@ -479,8 +479,11 @@ Poisson3DParallel::solve()
         TrilinosWrappers::PreconditionAMG preconditioner;
         preconditioner.initialize(system_matrix, amg_data);
 
+        TrilinosWrappers::PreconditionAMG::size_type memoryUsage = preconditioner.memory_consumption();
+
         // Solve the linear system using GMRES and the AMG preconditioner
         GMRESsolver.solve(system_matrix, solution, system_rhs, preconditioner);
+        pcout << "Memory Consumption: " << memoryUsage << " bytes" << std::endl;
     }else{
         pcout<<"Error! Preconditioner \" " <<preconditioner_name <<" \" not supported!"<<std::endl;
         std::exit(-1);
